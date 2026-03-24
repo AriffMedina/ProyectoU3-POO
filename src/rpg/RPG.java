@@ -29,13 +29,9 @@ public class RPG{
             case 1: 
                 return new Esqueleto(nivel);
             case 2:
-                return new Slime(nivel);
-            case 3:
                 return new Dragon(nivel);
-            case 4:
+            case 3:
                 return new Zombie(nivel);
-            case 5: 
-                return new ElMuro(nivel);
             default:
                 return null;
         }
