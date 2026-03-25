@@ -49,7 +49,7 @@ public class Combate {
     }
 
     public void usarConsumible(Personaje p) {
-        Consumible c = p.getConsumible();
+        Consumible c = p.getConsumibles().get(0);
         if (c == null) {
             System.out.println("No tienes ningún consumible para usar.");
             return;

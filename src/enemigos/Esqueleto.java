@@ -1,10 +1,10 @@
 package enemigos;
-import personajes.Personaje;
 
+import personajes.Personaje;
 
 public class Esqueleto extends Enemigo {
     public Esqueleto(int nivel) {
-        super("Esqueleto", nivel, nivel * 2, nivel * 2);
+        super("Esqueleto", nivel, nivel * 10, nivel * 10);
     }
 
     @Override
