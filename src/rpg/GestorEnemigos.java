@@ -1,6 +1,6 @@
 package rpg;
 
-import enemigos.Enemigo;
+import enemigos.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +10,8 @@ public class GestorEnemigos {
     public GestorEnemigos() {
         this.listaEnemigos = new ArrayList<>();
     }
-  
-   public static Enemigo generarEnemigo(int nivel) {
+
+    public static Enemigo generarEnemigo(int nivel) {
         int random = (int) (1 + Math.random() * 3); // Genera un número aleatorio entre 1 y 3
 
         switch (random) {
