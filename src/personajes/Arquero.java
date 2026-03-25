@@ -1,23 +1,22 @@
 package personajes;
 
+import Excepciones.ArmaRotaException;
+import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
-
 
 public class Arquero extends Personaje {
     private int precision;
     private int agilidad;
-  
 
-    public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa,int danio, int precision, int agilidad) {
+    public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int precision,
+            int agilidad) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
         this.precision = precision;
         this.agilidad = agilidad;
     }
 
-    
-
     @Override
-    public void atacar(Enemigo e) {
+    public void atacar(Enemigo e) throws ManaInsuficienteException {
         if (!estaVivo()) {
             System.out.println("El arquero " + getNombre()
                     + " intento bloquear el ataque con el arma " + getArma()
@@ -26,29 +25,33 @@ public class Arquero extends Personaje {
             return;
         }
 
-        if(e == null) {
+        if (e == null) {
             System.out.println("No hay enemigo objetivo para atacar.");
             return;
         }
-      
+
         int danioTotal = getDanio() + precision + agilidad;
-        if(getArma() != null){
-            if(getArma().estaRota()){
+        if (getArma() != null) {
+            if (getArma().estaRota()) {
                 System.out.println("El arma " + getArma().getNombre() + " esta rota, no puede ser usada para atacar.");
                 return;
-            } else{
+            } else {
                 danioTotal += getArma().getDanio();
-                System.out.println(getNombre() + " esta atacando con un " + getArma().getNombre() + " al enemigo " + e.getNombre());
-                getArma().usar();
+                System.out.println(getNombre() + " esta atacando con un " + getArma().getNombre() + " al enemigo "
+                        + e.getNombre());
+                try {
+                    getArma().usar();
+                } catch (ArmaRotaException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
-        } else{
-                System.out.println(getNombre() + " esta atacando sin arma al enemigo " + e.getNombre());
-            }
+        } else {
+            System.out.println(getNombre() + " esta atacando sin arma al enemigo " + e.getNombre());
+        }
         e.recibirDanio(danioTotal);
-        
+
     }
 
-    
     @Override
     public void bloquear() {
         if (!estaVivo()) {
