@@ -2,6 +2,9 @@ package rpg;
 
 import personajes.*;
 import enemigos.Enemigo;
+import items.Arma;
+import items.Armadura;
+import items.Consumible;
 import items.Item;
 
 public class JuegoServicio {
@@ -72,5 +75,36 @@ public class JuegoServicio {
         }
         System.out.println("Partida guardada exitosamente para " + jugador.getNombre() + ".");
     }
+
+    public void buscarItem(String nombre) {
+    if (jugador == null) {
+        System.out.println("Primero crea un personaje");
+        return;
+    }
+    boolean encontrado = false;
+
+    for (Arma arm : jugador.getArmas()) {
+        if (arm.getNombre().equalsIgnoreCase(nombre)) {
+            System.out.println("Item encontrado (Arma): " + arm);
+            encontrado = true;
+        }
+    }
+    for (Armadura a : jugador.getArmaduras()) {
+        if (a.getNombre().equalsIgnoreCase(nombre)) {
+            System.out.println("Item encontrado (Armadura): " + a);
+            encontrado = true;
+        }
+    }
+    for (Consumible c : jugador.getConsumibles()) {
+        if (c.getNombre().equalsIgnoreCase(nombre)) {
+            System.out.println("Item encontrado (Consumible): " + c);
+            encontrado = true;
+        }
+    }
+
+    if (!encontrado) {
+        System.out.println("No se encontro ningun item con el nombre: " + nombre);
+    }
+}
 
 }

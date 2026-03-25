@@ -5,7 +5,7 @@ import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
 import items.Consumible;
 
-public class Combate {
+public class GestorCombate {
     private static final int max_turnos = 50;
 
     public void iniciar(Personaje p, Enemigo e) {
