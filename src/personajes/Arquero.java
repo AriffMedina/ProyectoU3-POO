@@ -11,10 +11,12 @@ public class Arquero extends Personaje {
     public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int precision,
             int agilidad) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if (precision <= 0)
-            throw new IllegalArgumentException("La precision debe ser mayor a 0");
-        if (agilidad <= 0)
-            throw new IllegalArgumentException("La agilidad debe ser mayor a 0");
+        if (precision < 0) {
+            throw new IllegalArgumentException("La precision no puede ser negativa.");
+        }
+        if (agilidad < 0) {
+            throw new IllegalArgumentException("La agilidad no puede ser negativa.");
+        }
         this.precision = precision;
         this.agilidad = agilidad;
     }

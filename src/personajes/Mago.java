@@ -10,10 +10,13 @@ public class Mago extends Personaje {
     public Mago(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int mana,
             int manaMaximo) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if (manaMaximo <= 0)
+        if (manaMaximo <= 0) {
             throw new IllegalArgumentException("El mana maximo debe ser mayor a 0");
-        if (mana < 0 || mana > manaMaximo)
+        }
+
+        if (mana < 0 || mana > manaMaximo) {
             throw new IllegalArgumentException("El mana debe estar entre 0 y el mana maximo");
+        }
 
         this.mana = mana;
         this.manaMaximo = manaMaximo;
