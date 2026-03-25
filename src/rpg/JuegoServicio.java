@@ -6,7 +6,10 @@ import items.Arma;
 import items.Armadura;
 import items.Consumible;
 import items.Item;
+
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class JuegoServicio {
 
@@ -144,7 +147,23 @@ public class JuegoServicio {
         }
 
         if (!eliminado) {
-            System.out.println("No se o ningun item con el nombrre: " + nombre);
+            System.out.println("No se encontro ningun item con el nombrre: " + nombre);
         }
+    }
+
+    public void filtrarArmas() {
+        if (jugador == null) {
+            System.out.println("Primero crea un personaje");
+            return;
+        }
+
+        List<Arma> armasFiltradas = new ArrayList<>();
+
+        for (Arma a : jugador.getArmas()) {
+            if (!a.estaRota()) {
+                armasFiltradas.add(a);
+            }
+        }
+        System.out.println("Armas disponibles: " + armasFiltradas.size());
     }
 }
