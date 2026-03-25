@@ -78,73 +78,73 @@ public class JuegoServicio {
     }
 
     public void buscarItem(String nombre) {
-    if (jugador == null) {
-        System.out.println("Primero crea un personaje");
-        return;
-    }
-    boolean encontrado = false;
+        if (jugador == null) {
+            System.out.println("Primero crea un personaje");
+            return;
+        }
+        boolean encontrado = false;
 
-    for (Arma arm : jugador.getArmas()) {
-        if (arm.getNombre().equalsIgnoreCase(nombre)) {
-            System.out.println("Item encontrado (Arma): " + arm);
-            encontrado = true;
+        for (Arma arm : jugador.getArmas()) {
+            if (arm.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println("Item encontrado (Arma): " + arm);
+                encontrado = true;
+            }
         }
-    }
-    for (Armadura a : jugador.getArmaduras()) {
-        if (a.getNombre().equalsIgnoreCase(nombre)) {
-            System.out.println("Item encontrado (Armadura): " + a);
-            encontrado = true;
+        for (Armadura a : jugador.getArmaduras()) {
+            if (a.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println("Item encontrado (Armadura): " + a);
+                encontrado = true;
+            }
         }
-    }
-    for (Consumible c : jugador.getConsumibles()) {
-        if (c.getNombre().equalsIgnoreCase(nombre)) {
-            System.out.println("Item encontrado (Consumible): " + c);
-            encontrado = true;
+        for (Consumible c : jugador.getConsumibles()) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println("Item encontrado (Consumible): " + c);
+                encontrado = true;
+            }
         }
-    }
 
-    if (!encontrado) {
-        System.out.println("No se encontro ningun item con el nombre: " + nombre);
-    }
-}
+        if (!encontrado) {
+            System.out.println("No se encontro ningun item con el nombre: " + nombre);
+        }
+    }   
 
     public void eliminarItem(String nombre) {
-    if (jugador == null) {
-        System.out.println("Primero crea un personaje.");
-        return;
-    }
+        if (jugador == null) {
+            System.out.println("Primero crea un personaje.");
+            return;
+        }
 
-    boolean eliminado = false;
+        boolean eliminado = false;
 
-    Iterator<Arma> itArm = jugador.getArmas().iterator();
-    while (itArm.hasNext()) {
-        Arma a = itArm.next();
-        if (a.getNombre().equalsIgnoreCase(nombre)) {
-            itArm.remove();
-            eliminado = true;
+        Iterator<Arma> itArm = jugador.getArmas().iterator();
+        while (itArm.hasNext()) {
+            Arma a = itArm.next();
+            if (a.getNombre().equalsIgnoreCase(nombre)) {
+                itArm.remove();
+                eliminado = true;
+            }
+        }
+
+        Iterator<Armadura> itArmaduras = jugador.getArmaduras().iterator();
+        while (itArmaduras.hasNext()) {
+            Armadura a = itArmaduras.next();
+            if (a.getNombre().equalsIgnoreCase(nombre)) {
+                itArmaduras.remove();
+                eliminado = true;
+            }
+        }
+
+        Iterator<Consumible> itCons = jugador.getConsumibles().iterator();
+        while (itCons.hasNext()) {
+            Consumible c = itCons.next();
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
+                itCons.remove();
+                eliminado = true;
+            }
+        }
+
+        if (!eliminado) {
+            System.out.println("No se o ningun item con el nombrre: " + nombre);
         }
     }
-
-    Iterator<Armadura> itArmaduras = jugador.getArmaduras().iterator();
-    while (itArmaduras.hasNext()) {
-        Armadura a = itArmaduras.next();
-        if (a.getNombre().equalsIgnoreCase(nombre)) {
-            itArmaduras.remove();
-            eliminado = true;
-        }
-    }
-
-    Iterator<Consumible> itCons = jugador.getConsumibles().iterator();
-    while (itCons.hasNext()) {
-        Consumible c = itCons.next();
-        if (c.getNombre().equalsIgnoreCase(nombre)) {
-            itCons.remove();
-            eliminado = true;
-        }
-    }
-
-    if (!eliminado) {
-        System.out.println("No se o ningun item con el nombrre: " + nombre);
-    }
-}
 }
