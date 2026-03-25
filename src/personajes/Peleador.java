@@ -10,6 +10,10 @@ public class Peleador extends Personaje {
     public Peleador(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int fuerza,
             int resistencia) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
+        if (fuerza <= 0)
+            throw new IllegalArgumentException("La fuerza debe ser mayor a 0");
+        if (resistencia <= 0)
+            throw new IllegalArgumentException("La resistencia debe ser mayor a 0");
         this.fuerza = fuerza;
         this.resistencia = resistencia;
     }
@@ -36,7 +40,7 @@ public class Peleador extends Personaje {
             return;
         }
         activarBloqueo();
-        if (defensa + resistencia >= danio) {
+        if (getDefensa() + resistencia >= getDanio()) {
             System.out.println(getNombre() + " bloquea el ataque con su fuerza y resistencia.");
         } else {
             System.out.println(getNombre() + " intenta bloquear pero no puede absorber todo el daño.");
@@ -44,17 +48,8 @@ public class Peleador extends Personaje {
     }
 
     @Override
-    public void recibirDanio(int danio) {
-        if (!estaVivo()) {
-            return;
-        }
-
-        aplicarDanioRecibido(danio);
-    }
-
-    @Override
     public boolean estaVivo() {
-        if (vidaActual == 0) {
+        if (getVidaActual() == 0) {
             return false;
         }
         return true;
@@ -63,12 +58,12 @@ public class Peleador extends Personaje {
     @Override
     public String toString() {
         return "|Peleador{" +
-                "\n|— nombre='" + nombre + '\'' +
-                "\n|— nivel=" + nivel +
-                "\n|— vidaMaxima=" + vidaMaxima +
-                "\n|— vidaActual=" + vidaActual +
-                "\n|— defensa=" + defensa +
-                "\n|— daño=" + danio +
+                "\n|— nombre='" + getNombre() + '\'' +
+                "\n|— nivel=" + getNivel() +
+                "\n|— vidaMaxima=" + getVidaMaxima() +
+                "\n|— vidaActual=" + getVidaActual() +
+                "\n|— defensa=" + (getDefensa() + resistencia) +
+                "\n|— daño=" + getDanio() +
                 "\n|— fuerza=" + fuerza +
                 "\n|— resistencia=" + resistencia +
                 '}';

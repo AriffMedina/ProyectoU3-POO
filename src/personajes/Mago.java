@@ -63,7 +63,7 @@ public class Mago extends Personaje {
             return;
         }
         activarBloqueo();
-        if (defensa >= danio) {
+        if (getDefensa() >= getDanio()) {
             System.out.println(getNombre() + " pasa a la defensa y logra bloquear el ataque.");
         } else {
             System.out.println(getNombre() + " intenta bloquear pero su defensa es insuficiente.");
@@ -71,17 +71,8 @@ public class Mago extends Personaje {
     }
 
     @Override
-    public void recibirDanio(int daño) {
-        if (!estaVivo()) {
-            return;
-        }
-
-        aplicarDanioRecibido(daño);
-    }
-
-    @Override
     public boolean estaVivo() {
-        if (vidaActual == 0) {
+        if (getVidaActual() == 0) {
             return false;
         }
         return true;
@@ -94,7 +85,7 @@ public class Mago extends Personaje {
                 ", nivel=" + getNivel() +
                 ", vidaActual=" + getVidaActual() +
                 ", vidaMaxima=" + getVidaMaxima() +
-                ", defensa=" + defensa +
+                ", defensa=" + getDefensa() +
                 ", daño=" + getDanio() +
                 ", mana=" + mana +
                 "/" + manaMaximo +

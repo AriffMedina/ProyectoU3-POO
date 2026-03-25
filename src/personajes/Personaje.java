@@ -1,5 +1,8 @@
 package personajes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
 import items.Arma;
@@ -8,16 +11,16 @@ import interfaces.Vida;
 import items.Consumible;
 
 public abstract class Personaje implements Vida {
-    protected String nombre;
-    protected int nivel;
-    protected int vidaMaxima;
-    protected int vidaActual;
-    protected int defensa;
-    protected int danio;
-    protected Arma arma;
-    protected Armadura armadura;
-    protected Consumible consumible;
-    protected boolean bloqueando;
+    private String nombre;
+    private int nivel;
+    private int vidaMaxima;
+    private int vidaActual;
+    private int defensa;
+    private int danio;
+    private List<Arma> armas;
+    private List<Armadura> armaduras;
+    private List<Consumible> consumibles;
+    private boolean bloqueando;
 
     public Personaje(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio) {
         if (nombre == null || nombre.isEmpty()) {
@@ -29,15 +32,19 @@ public abstract class Personaje implements Vida {
         this.vidaActual = vidaActual;
         this.vidaMaxima = vidaMaxima;
         this.defensa = defensa;
-        this.arma = null;
-        this.armadura = null;
-        this.consumible = null;
+        this.armas = new ArrayList<>();
+        this.armaduras = new ArrayList<>();
+        this.consumibles = new ArrayList<>();
         this.bloqueando = false;
     }
+
+    // * Métodos abstractos
 
     public abstract void atacar(Enemigo e) throws ManaInsuficienteException;
 
     public abstract void bloquear();
+
+    // * Getters
 
     public int getNivel() {
         return nivel;
@@ -48,7 +55,9 @@ public abstract class Personaje implements Vida {
     }
 
     public Arma getArma() {
-        return arma;
+        if (armas.isEmpty())
+            return null;
+        return armas.get(armas.size() - 1);
     }
 
     public int getDanio() {
@@ -59,12 +68,24 @@ public abstract class Personaje implements Vida {
         return vidaActual;
     }
 
+    public int getDefensa() {
+        return defensa;
+    }
+
     public int getVidaMaxima() {
         return vidaMaxima;
     }
 
-    public Consumible getConsumible() {
-        return consumible;
+    public List<Arma> getArmas() {
+        return armas;
+    }
+
+    public List<Armadura> getArmaduras() {
+        return armaduras;
+    }
+
+    public List<Consumible> getConsumibles() {
+        return consumibles;
     }
 
     public void activarBloqueo() {
@@ -74,11 +95,14 @@ public abstract class Personaje implements Vida {
     public int calcularDefensaTotal() {
         int defensaTotal = defensa;
 
-        if (armadura != null && !armadura.estaRota()) {
-            defensaTotal += armadura.getDefensa();
-            armadura.reducirDurabilidad(1);
-            System.out.println(getNombre() + " bloquea parte del daño con su armadura " + armadura.getNombre()
-                    + ". Defensa total: " + defensaTotal);
+        if (!armaduras.isEmpty()) {
+            Armadura ultima = armaduras.get(armaduras.size() - 1);
+            if (!ultima.estaRota()) {
+                defensaTotal += ultima.getDefensa();
+                ultima.reducirDurabilidad(1);
+                System.out.println(getNombre() + " bloquea parte del daño con su armadura " + ultima.getNombre()
+                        + ". Defensa total: " + defensaTotal);
+            }
         }
 
         if (bloqueando) {
@@ -90,11 +114,13 @@ public abstract class Personaje implements Vida {
         return defensaTotal;
     }
 
-    public void aplicarDanioRecibido(int danioRecibido) {
+    @Override
+    public void recibirDanio(int danioRecibido) {
         int danioFinal = Math.max(0, danioRecibido - calcularDefensaTotal());
         vidaActual = Math.max(0, vidaActual - danioFinal);
         System.out.println(getNombre() + " recibió " + danioFinal + " de daño.");
         System.out.println("Vida actual: " + vidaActual);
+
     }
 
     public void setVidaActual(int nuevaVida) {
@@ -110,7 +136,7 @@ public abstract class Personaje implements Vida {
             System.out.println("No se puede equipar un arma nula.");
             return;
         }
-        this.arma = a;
+        armas.add(a);
     }
 
     public void setArmadura(Armadura a) {
@@ -118,7 +144,7 @@ public abstract class Personaje implements Vida {
             System.out.println("El personaje " + getNombre() + " no tiene ninguna armadura para usar.");
             return;
         }
-        this.armadura = a;
+        armaduras.add(a);
     }
 
     public void setConsumible(Consumible c) {
@@ -126,17 +152,17 @@ public abstract class Personaje implements Vida {
             System.out.println("El personaje " + getNombre() + " no tiene ningun consumible para usar.");
             return;
         }
-        this.consumible = c;
+        consumibles.add(c);
     }
 
     public String toString() {
         return "Personaje{" +
-                "nombre='" + nombre + '\'' +
-                ", nivel=" + nivel +
-                ", vidaMaxima=" + vidaMaxima +
-                ", vidaActual=" + vidaActual +
-                ", defensa=" + defensa +
-                ", daño=" + danio +
+                "nombre='" + getNombre() + '\'' +
+                ", nivel=" + getNivel() +
+                ", vidaMaxima=" + getVidaMaxima() +
+                ", vidaActual=" + getVidaActual() +
+                ", defensa=" + getDefensa() +
+                ", daño=" + getDanio() +
                 '}';
     }
 }

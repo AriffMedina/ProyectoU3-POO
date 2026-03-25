@@ -11,6 +11,10 @@ public class Arquero extends Personaje {
     public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int precision,
             int agilidad) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
+        if (precision <= 0)
+            throw new IllegalArgumentException("La precision debe ser mayor a 0");
+        if (agilidad <= 0)
+            throw new IllegalArgumentException("La agilidad debe ser mayor a 0");
         this.precision = precision;
         this.agilidad = agilidad;
     }
@@ -69,12 +73,12 @@ public class Arquero extends Personaje {
             return;
         }
 
-        aplicarDanioRecibido(danio);
+        recibirDanio(danio);
     }
 
     @Override
     public boolean estaVivo() {
-        if (vidaActual == 0) {
+        if (getVidaActual() == 0) {
             return false;
         }
         return true;
@@ -87,12 +91,12 @@ public class Arquero extends Personaje {
                 ", nivel=" + getNivel() +
                 ", vidaActual=" + getVidaActual() +
                 ", vidaMaxima=" + getVidaMaxima() +
-                ", defensa=" + defensa +
+                ", defensa=" + getDefensa() +
                 ", daño=" + getDanio() +
                 ", precision=" + precision +
                 ", agilidad=" + agilidad +
                 ", arma=" + getArma() +
-                ", armadura=" + armadura +
+                ", armadura=" + getArmaduras() +
                 '}';
     }
 }
