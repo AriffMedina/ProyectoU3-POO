@@ -6,6 +6,7 @@ import items.Arma;
 import items.Armadura;
 import items.Consumible;
 import items.Item;
+import java.util.Iterator;
 
 public class JuegoServicio {
 
@@ -107,4 +108,43 @@ public class JuegoServicio {
     }
 }
 
+    public void eliminarItem(String nombre) {
+    if (jugador == null) {
+        System.out.println("Primero crea un personaje.");
+        return;
+    }
+
+    boolean eliminado = false;
+
+    Iterator<Arma> itArm = jugador.getArmas().iterator();
+    while (itArm.hasNext()) {
+        Arma a = itArm.next();
+        if (a.getNombre().equalsIgnoreCase(nombre)) {
+            itArm.remove();
+            eliminado = true;
+        }
+    }
+
+    Iterator<Armadura> itArmaduras = jugador.getArmaduras().iterator();
+    while (itArmaduras.hasNext()) {
+        Armadura a = itArmaduras.next();
+        if (a.getNombre().equalsIgnoreCase(nombre)) {
+            itArmaduras.remove();
+            eliminado = true;
+        }
+    }
+
+    Iterator<Consumible> itCons = jugador.getConsumibles().iterator();
+    while (itCons.hasNext()) {
+        Consumible c = itCons.next();
+        if (c.getNombre().equalsIgnoreCase(nombre)) {
+            itCons.remove();
+            eliminado = true;
+        }
+    }
+
+    if (!eliminado) {
+        System.out.println("No se o ningun item con el nombrre: " + nombre);
+    }
+}
 }
