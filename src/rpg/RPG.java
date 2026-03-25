@@ -3,18 +3,18 @@ package rpg;
 import enemigos.*;
 import items.*;
 
-public class RPG{
-    
-    public Item generarItem(){
-        int random = (int)(1 + Math.random() * 4); // Genera un número aleatorio entre 1 y 4
+public class RPG {
 
-        switch(random){
-            case 1: 
+    public Item generarItem() {
+        int random = (int) (1 + Math.random() * 4); // Genera un número aleatorio entre 1 y 4
+
+        switch (random) {
+            case 1:
                 return new Consumible("Poción de Salud", 1, 5);
             case 2:
                 return new ArmaMelee("Daga", 1, 10, 10, 5);
             case 3:
-                return new ArmaDistancia("Arco de madera", 15, 10, 5, 5, 10);
+                return new ArmaDistancia("Arco de madera", 15, 10, 5, 5, 0.5);
             case 4:
                 return new Armadura("Armadura de piel", 1, 0, 20);
             default:
@@ -22,11 +22,11 @@ public class RPG{
         }
     }
 
-    public Enemigo generarEnemigo(int nivel){
-        int random = (int)(1 + Math.random() * 5); // Genera un número aleatorio entre 1 y 3
+    public Enemigo generarEnemigo(int nivel) {
+        int random = (int) (1 + Math.random() * 3); // Genera un número aleatorio entre 1 y 3
 
-        switch(random){
-            case 1: 
+        switch (random) {
+            case 1:
                 return new Esqueleto(nivel);
             case 2:
                 return new Dragon(nivel);

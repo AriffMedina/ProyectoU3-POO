@@ -31,13 +31,28 @@ public abstract class Enemigo implements Vida {
 
 
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del enemigo no puede estar vacío.");
+        }
+        this.nombre = nombre;
+    }
 
     public int getVida() { return vida; }
-    public void setVida(int vida) { this.vida = vida; }
+    public void setVida(int vida) {
+        if (vida < 0) {
+            throw new IllegalArgumentException("La vida no puede ser negativa.");
+        }
+        this.vida = vida;
+    }
 
     public int getNivel() { return nivel; }
-    public void setNivel(int nivel) { this.nivel = nivel; }
+    public void setNivel(int nivel) {
+        if (nivel <= 0) {
+            throw new IllegalArgumentException("El nivel debe ser mayor a 0.");
+        }
+        this.nivel = nivel;
+    }
 
     public int getExperienciaOtorgada() { return experienciaOtorgada; }
 

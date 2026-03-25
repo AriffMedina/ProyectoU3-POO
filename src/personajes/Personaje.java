@@ -23,6 +23,21 @@ public abstract class Personaje implements Vida {
         if (nombre == null || nombre.isEmpty()) {
             throw new IllegalArgumentException("El personaje debe tener un nombre válido.");
         }
+        if (nivel <= 0) {
+            throw new IllegalArgumentException("El nivel debe ser mayor a 0.");
+        }
+        if (vidaMaxima <= 0) {
+            throw new IllegalArgumentException("La vida máxima debe ser mayor a 0.");
+        }
+        if (vidaActual < 0 || vidaActual > vidaMaxima) {
+            throw new IllegalArgumentException("La vida actual debe estar entre 0 y la vida máxima.");
+        }
+        if (defensa < 0) {
+            throw new IllegalArgumentException("La defensa no puede ser negativa.");
+        }
+        if (danio < 0) {
+            throw new IllegalArgumentException("El daño no puede ser negativo.");
+        }
         this.nombre = nombre;
         this.danio = danio;
         this.nivel = nivel;
