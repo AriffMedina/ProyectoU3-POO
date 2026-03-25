@@ -4,16 +4,14 @@ import personajes.*;
 import enemigos.Enemigo;
 import items.Item;
 
-public class Juego {
+public class JuegoServicio {
 
     private Personaje jugador;
-    private RPG rng;
-    private Combate accion;
+    private GestorCombate accion;
 
-    public Juego() {
+    public JuegoServicio() {
         System.out.println("======== Bienvenido al Juego de Rol RPG ========\n");
-        rng = new RPG();
-        accion = new Combate();
+        accion = new GestorCombate();
 
     }
 
@@ -45,7 +43,7 @@ public class Juego {
             return;
         }
 
-        Item i = rng.generarItem();
+        Item i = GestorItems.generarItem();
         System.out.println("Obtuviste: " + i.getNombre());
         i.equiparEn(jugador);
     }
@@ -55,7 +53,7 @@ public class Juego {
             System.out.println("Primero debes crear tu personaje para iniciar un combate.");
             return;
         }
-        Enemigo enemigo = rng.generarEnemigo(jugador.getNivel());
+        Enemigo enemigo = GestorEnemigos.generarEnemigo(jugador.getNivel());
         accion.iniciar(jugador, enemigo);
     }
 
@@ -74,4 +72,5 @@ public class Juego {
         }
         System.out.println("Partida guardada exitosamente para " + jugador.getNombre() + ".");
     }
+
 }
