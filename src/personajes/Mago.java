@@ -1,23 +1,27 @@
 package personajes;
 
+import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
 
 public class Mago extends Personaje {
     private int mana;
     private int manaMaximo;
 
-    public Mago(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int mana, int manaMaximo) {
+    public Mago(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int mana,
+            int manaMaximo) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if(manaMaximo <=0) throw new IllegalArgumentException("El mana maximo debe ser mayor a 0");
-        if(mana < 0 || mana > manaMaximo) throw new IllegalArgumentException("El mana debe estar entre 0 y el mana maximo");
-    
+        if (manaMaximo <= 0)
+            throw new IllegalArgumentException("El mana maximo debe ser mayor a 0");
+        if (mana < 0 || mana > manaMaximo)
+            throw new IllegalArgumentException("El mana debe estar entre 0 y el mana maximo");
+
         this.mana = mana;
         this.manaMaximo = manaMaximo;
     }
 
     @Override
-    public void atacar(Enemigo e) {
-        if(!estaVivo()) {
+    public void atacar(Enemigo e) throws ManaInsuficienteException {
+        if (!estaVivo()) {
             System.out.println("El mago " + getNombre()
                     + " intento bloquear el ataque con el arma " + getArma()
                     + "   pero la diosa abandona este mundo, dejandolo morir por un ataque del enemigo"
@@ -25,20 +29,19 @@ public class Mago extends Personaje {
             return;
         }
 
-        if(getArma() == null){
+        if (getArma() == null) {
             System.out.println(getNombre() + " no tiene un arma equipada y no puede atacar.");
             return;
         }
 
-        if(mana < 10) {
-            System.out.println(getNombre() + " no tiene suficiente mana para atacar.");
-            return;
+        if (mana < 10) {
+            throw new ManaInsuficienteException("No tienes sufciente mana para atacar y tu mana es " + mana);
         }
 
         int danioTotal = getDanio() + getArma().getDanio() + mana;
         System.out.println(getNombre() + " ataca con " + getArma().getNombre() + " y su mana a " + e.getNombre());
         e.recibirDanio(danioTotal);
-        mana -=10;
+        mana -= 10;
     }
 
     public void recargarMana(int recarga) {

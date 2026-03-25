@@ -1,14 +1,17 @@
 package items;
 
+import Excepciones.ArmaRotaException;
 import personajes.Personaje;
 
 public abstract class Item {
     protected String nombre;
     protected int cantidad;
 
-    public Item(String nombre, int cantidad){
-        if(nombre == null || nombre.isEmpty()) throw new IllegalArgumentException("El item debe de tener un nombre");
-        if(cantidad <0) throw new IllegalArgumentException("La cantidad no puede ser negativa");
+    public Item(String nombre, int cantidad) {
+        if (nombre == null || nombre.isEmpty())
+            throw new IllegalArgumentException("El item debe de tener un nombre");
+        if (cantidad < 0)
+            throw new IllegalArgumentException("La cantidad no puede ser negativa");
         this.nombre = nombre;
         this.cantidad = cantidad;
     }
@@ -21,10 +24,10 @@ public abstract class Item {
         return cantidad;
     }
 
-    public abstract void usar();
-    
+    public abstract void usar() throws ArmaRotaException;
+
     public abstract void equiparEn(Personaje p);
-       
+
     @Override
     public String toString() {
         return "Item{" +

@@ -1,31 +1,32 @@
 package personajes;
 
+import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
-
 
 public class Peleador extends Personaje {
     private int fuerza;
     private int resistencia;
 
-    public Peleador(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int fuerza, int resistencia) {
+    public Peleador(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int fuerza,
+            int resistencia) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
         this.fuerza = fuerza;
         this.resistencia = resistencia;
     }
 
-
     @Override
-    public void atacar(Enemigo e) {
+    public void atacar(Enemigo e) throws ManaInsuficienteException {
         if (!estaVivo()) {
             System.out.println("El peleador " + getNombre() + " está muerto y no puede atacar.");
             return;
         }
-        if(getArma() == null){
+        if (getArma() == null) {
             System.out.println(getNombre() + " no tiene un arma equipada.");
             return;
         }
         int danioTotal = getDanio() + this.fuerza * 2 + getArma().getDanio();
-        System.out.println(getNombre() + " está atacando con un " + getArma().getNombre() + " al enemigo " + e.getNombre());
+        System.out.println(
+                getNombre() + " está atacando con un " + getArma().getNombre() + " al enemigo " + e.getNombre());
         e.recibirDanio(danioTotal);
     }
 
