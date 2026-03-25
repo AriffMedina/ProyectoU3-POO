@@ -75,12 +75,12 @@ public class Arquero extends Personaje {
             return;
         }
 
-        aplicarDanioRecibido(danio);
+        recibirDanio(danio);
     }
 
     @Override
     public boolean estaVivo() {
-        if (vidaActual == 0) {
+        if (getVidaActual() == 0) {
             return false;
         }
         return true;
@@ -93,12 +93,12 @@ public class Arquero extends Personaje {
                 ", nivel=" + getNivel() +
                 ", vidaActual=" + getVidaActual() +
                 ", vidaMaxima=" + getVidaMaxima() +
-                ", defensa=" + defensa +
+                ", defensa=" + getDefensa() +
                 ", daño=" + getDanio() +
                 ", precision=" + precision +
                 ", agilidad=" + agilidad +
                 ", arma=" + getArma() +
-                ", armadura=" + armadura +
+                ", armadura=" + getArmaduras() +
                 '}';
     }
 }
