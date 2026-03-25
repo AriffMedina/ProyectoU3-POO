@@ -70,15 +70,6 @@ public class Arquero extends Personaje {
     }
 
     @Override
-    public void recibirDanio(int danio) {
-        if (!estaVivo()) {
-            return;
-        }
-
-        recibirDanio(danio);
-    }
-
-    @Override
     public boolean estaVivo() {
         if (getVidaActual() == 0) {
             return false;
