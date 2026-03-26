@@ -54,78 +54,44 @@ public abstract class Personaje implements Vida {
     }
 
     // * Métodos abstractos
-
     public abstract void atacar(Enemigo e) throws ManaInsuficienteException;
-
     public abstract void bloquear();
+    
+    // Método para persistencia
+    public abstract String toCSV();
 
-    // * Getters
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
+    // * Getters y Setters
+    public int getNivel() { return nivel; }
+    public String getNombre() { return nombre; }
     public Arma getArma() {
-        if (armas.isEmpty())
-            return null;
+        if (armas.isEmpty()) return null;
         return armas.get(armas.size() - 1);
     }
+    public int getDanio() { return danio; }
+    public int getVidaActual() { return vidaActual; }
+    public int getDefensa() { return defensa; }
+    public int getVidaMaxima() { return vidaMaxima; }
+    public List<Arma> getArmas() { return armas; }
+    public List<Armadura> getArmaduras() { return armaduras; }
+    public List<Consumible> getConsumibles() { return consumibles; }
 
-    public int getDanio() {
-        return danio;
-    }
-
-    public int getVidaActual() {
-        return vidaActual;
-    }
-
-    public int getDefensa() {
-        return defensa;
-    }
-
-    public int getVidaMaxima() {
-        return vidaMaxima;
-    }
-
-    public List<Arma> getArmas() {
-        return armas;
-    }
-
-    public List<Armadura> getArmaduras() {
-        return armaduras;
-    }
-
-    public List<Consumible> getConsumibles() {
-        return consumibles;
-    }
-
-    public void activarBloqueo() {
-        bloqueando = true;
-    }
+    public void activarBloqueo() { bloqueando = true; }
 
     public int calcularDefensaTotal() {
         int defensaTotal = defensa;
-
         if (!armaduras.isEmpty()) {
             Armadura ultima = armaduras.get(armaduras.size() - 1);
             if (!ultima.estaRota()) {
                 defensaTotal += ultima.getDefensa();
                 ultima.reducirDurabilidad(1);
-                System.out.println(getNombre() + " bloquea parte del daño con su armadura " + ultima.getNombre()
-                        + ". Defensa total: " + defensaTotal);
+                System.out.println(getNombre() + " bloquea parte del daño con su armadura " + ultima.getNombre() + ". Defensa total: " + defensaTotal);
             }
         }
-
         if (bloqueando) {
             defensaTotal += defensa;
             bloqueando = false;
             System.out.println(getNombre() + " refuerza su defensa al bloquear.");
         }
-
         return defensaTotal;
     }
 
@@ -135,7 +101,6 @@ public abstract class Personaje implements Vida {
         vidaActual = Math.max(0, vidaActual - danioFinal);
         System.out.println(getNombre() + " recibió " + danioFinal + " de daño.");
         System.out.println("Vida actual: " + vidaActual);
-
     }
 
     public void setVidaActual(int nuevaVida) {
@@ -170,6 +135,7 @@ public abstract class Personaje implements Vida {
         consumibles.add(c);
     }
 
+    @Override
     public String toString() {
         return "Personaje{" +
                 "nombre='" + getNombre() + '\'' +
