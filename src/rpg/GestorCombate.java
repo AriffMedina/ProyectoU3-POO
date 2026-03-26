@@ -82,10 +82,9 @@ public class GestorCombate {
                     }
                     break;
                 case 4:
-                    System.out.println("\n[ESTADO]");
+                    System.out.println("\n===ESTADO===");
                     System.out.println(p.toString());
                     System.out.println(e.toString());
-                    // Ver el estado no gasta tu turno, el bucle continuará.
                     break;
                 default:
                     System.out.println("Opción no válida.");
@@ -107,7 +106,6 @@ public class GestorCombate {
         int vidaNueva = c.curar(vidaAntes, p.getVidaMaxima());
         p.setVidaActual(vidaNueva);
 
-        // Removemos el consumible tras usarlo
         p.getConsumibles().remove(0);
 
         System.out.println("Vida restaurada: " + vidaAntes + " -> " + vidaNueva);

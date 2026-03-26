@@ -53,17 +53,14 @@ public abstract class Personaje implements Vida {
         this.bloqueando = false;
     }
 
-    // * Métodos abstractos
     public abstract void atacar(Enemigo e) throws ManaInsuficienteException;
 
     public abstract void bloquear();
 
-    // Método para persistencia
     public String toCSV() {
         return nombre + "," + nivel + "," + vidaMaxima + "," + vidaActual + "," + defensa + "," + danio;
     }
 
-    // * Getters y Setters
     public int getNivel() {
         return nivel;
     }

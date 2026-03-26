@@ -12,7 +12,7 @@ public class GestorEnemigos {
     }
 
     public static Enemigo generarEnemigo(int nivel) {
-        int random = (int) (1 + Math.random() * 3); // Genera un número aleatorio entre 1 y 3
+        int random = (int) (1 + Math.random() * 3);
 
         switch (random) {
             case 1:
