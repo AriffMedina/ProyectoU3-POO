@@ -3,7 +3,7 @@ package personajes;
 import java.util.ArrayList;
 import java.util.List;
 
-import Excepciones.ManaInsuficienteException;
+import excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
 import items.Arma;
 import items.Armadura;
@@ -116,6 +116,13 @@ public abstract class Personaje implements Vida {
             System.out.println("No se puede equipar un arma nula.");
             return;
         }
+        for (Arma existente : armas) {
+            if (existente.getNombre().equalsIgnoreCase(a.getNombre())
+                    && existente.getClass().equals(a.getClass())) {
+                existente.aumentarCantidad(a.getCantidad());
+                return;
+            }
+        }
         armas.add(a);
     }
 
@@ -124,6 +131,12 @@ public abstract class Personaje implements Vida {
             System.out.println("El personaje " + getNombre() + " no tiene ninguna armadura para usar.");
             return;
         }
+        for (Armadura existente : armaduras) {
+            if (existente.getNombre().equalsIgnoreCase(a.getNombre())) {
+                existente.aumentarCantidad(a.getCantidad());
+                return;
+            }
+        }
         armaduras.add(a);
     }
 
@@ -131,6 +144,12 @@ public abstract class Personaje implements Vida {
         if (c == null) {
             System.out.println("El personaje " + getNombre() + " no tiene ningun consumible para usar.");
             return;
+        }
+        for (Consumible existente : consumibles) {
+            if (existente.getNombre().equalsIgnoreCase(c.getNombre())) {
+                existente.aumentarCantidad(c.getCantidad());
+                return;
+            }
         }
         consumibles.add(c);
     }

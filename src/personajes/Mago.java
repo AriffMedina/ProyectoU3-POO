@@ -1,7 +1,7 @@
 package personajes;
 
-import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
+import excepciones.ManaInsuficienteException;
 
 public class Mago extends Personaje {
     private int mana;

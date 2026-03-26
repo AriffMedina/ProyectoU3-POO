@@ -1,8 +1,8 @@
 package rpg;
 
 import personajes.*;
-import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
+import excepciones.ManaInsuficienteException;
 import items.Consumible;
 
 public class GestorCombate {

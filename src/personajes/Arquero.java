@@ -1,8 +1,8 @@
 package personajes;
 
-import Excepciones.ArmaRotaException;
-import Excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
+import excepciones.ArmaRotaException;
+import excepciones.ManaInsuficienteException;
 
 public class Arquero extends Personaje {
     private int precision;
@@ -11,31 +11,32 @@ public class Arquero extends Personaje {
     public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int precision,
             int agilidad) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if (precision < 0) throw new IllegalArgumentException("La precision no puede ser negativa.");
-        if (agilidad < 0) throw new IllegalArgumentException("La agilidad no puede ser negativa.");
+        if (precision < 0)
+            throw new IllegalArgumentException("La precision no puede ser negativa.");
+        if (agilidad < 0)
+            throw new IllegalArgumentException("La agilidad no puede ser negativa.");
         this.precision = precision;
         this.agilidad = agilidad;
     }
 
     @Override
     public String toCSV() {
-        return "Arquero," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," + 
-               getVidaActual() + "," + getDefensa() + "," + getDanio() + "," + 
-               precision + "," + agilidad;
+        return "Arquero" + "," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," +
+                getVidaActual() + "," + getDefensa() + "," + getDanio() + "," +
+                precision + "," + agilidad;
     }
 
     public static Arquero fromCSV(String linea) {
         String[] partes = linea.split(",");
         return new Arquero(
-            partes[1], 
-            Integer.parseInt(partes[2]), 
-            Integer.parseInt(partes[3]), 
-            Integer.parseInt(partes[4]), 
-            Integer.parseInt(partes[5]), 
-            Integer.parseInt(partes[6]), 
-            Integer.parseInt(partes[7]), 
-            Integer.parseInt(partes[8])
-        );
+                partes[1],
+                Integer.parseInt(partes[2]),
+                Integer.parseInt(partes[3]),
+                Integer.parseInt(partes[4]),
+                Integer.parseInt(partes[5]),
+                Integer.parseInt(partes[6]),
+                Integer.parseInt(partes[7]),
+                Integer.parseInt(partes[8]));
     }
 
     @Override
@@ -44,7 +45,8 @@ public class Arquero extends Personaje {
             System.out.println("El arquero " + getNombre() + " murió intentando atacar.");
             return;
         }
-        if (e == null) return;
+        if (e == null)
+            return;
 
         int danioTotal = getDanio() + precision + agilidad;
         if (getArma() != null) {
@@ -65,7 +67,8 @@ public class Arquero extends Personaje {
 
     @Override
     public void bloquear() {
-        if (!estaVivo()) return;
+        if (!estaVivo())
+            return;
         activarBloqueo();
         System.out.println(getNombre() + " adopta una posicion defensiva.");
     }
@@ -77,6 +80,7 @@ public class Arquero extends Personaje {
 
     @Override
     public String toString() {
-        return "Arquero{" + "nombre='" + getNombre() + "', nivel=" + getNivel() + ", precision=" + precision + ", agilidad=" + agilidad + '}';
+        return "Arquero{" + "nombre='" + getNombre() + "', nivel=" + getNivel() + ", precision=" + precision
+                + ", agilidad=" + agilidad + '}';
     }
 }

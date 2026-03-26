@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 
 public class ArmaDistancia extends Arma {
     private int municion;
@@ -55,8 +55,8 @@ public class ArmaDistancia extends Arma {
     }
 
     @Override
-    public String toCSV(String propietarioString) {
-        return propietarioString + "ArmaDistancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
+    public String toCSV() {
+        return "arma_distancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
                 + municion + "," + precision + ",";
     }
 
@@ -69,12 +69,12 @@ public class ArmaDistancia extends Arma {
     @Override
     public String toString() {
         return "|ArmaDistancia{" +
-                "\n|— nombre='" + nombre + '\'' +
-                "\n|— cantidad=" + cantidad +
-                "\n|— danio=" + danio +
-                "\n|— durabilidad=" + durabilidad +
-                "\n|— municion=" + municion +
-                "\n|— precision=" + precision +
+                "\n|- nombre='" + nombre + '\'' +
+                "\n|- cantidad=" + cantidad +
+                "\n|- danio=" + danio +
+                "\n|- durabilidad=" + durabilidad +
+                "\n|- municion=" + municion +
+                "\n|- precision=" + precision +
                 '\n' + '}';
     }
 }

@@ -1,4 +1,4 @@
-package Persistencia;
+package persistencia;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,19 +23,19 @@ public class ItemArchivo {
         this.rutaArchivo = rutaArchivo;
     }
 
-    public void guardarInventario(List<Personaje> lista) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
+    public void guardarInventario(List<Personaje> lista) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
             for (Personaje p : lista) {
                 for (Arma a : p.getArmas()) {
-                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + a.toCSV());
                     bw.newLine();
                 }
                 for (Armadura a : p.getArmaduras()) {
-                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + a.toCSV());
                     bw.newLine();
                 }
                 for (Consumible c : p.getConsumibles()) {
-                    bw.write(p.getNombre() + "," + c.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + c.toCSV());
                     bw.newLine();
                 }
             }
@@ -44,7 +44,7 @@ public class ItemArchivo {
         }
     }
 
-    public void cargarInventario(List<Personaje> personajes) throws IOException {
+    public void cargarInventario(List<Personaje> personajes) {
         File archivo = new File(rutaArchivo);
         if (!archivo.exists())
             return;

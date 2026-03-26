@@ -6,35 +6,36 @@ import items.Arma;
 import items.Armadura;
 import items.Consumible;
 import items.Item;
+import interfaces.PartidaRepositorio;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class JuegoServicio {
-
     private Personaje jugador;
     private GestorCombate accion;
+    private PartidaRepositorio repositorio;
 
-    public JuegoServicio() {
+    public JuegoServicio(PartidaRepositorio repositorio) {
         System.out.println("======== Bienvenido al Juego de Rol RPG ========\n");
         accion = new GestorCombate();
-
+        this.repositorio = repositorio;
     }
 
     public void crearJugador(int opcion) {
         switch (opcion) {
             case 1:
-                jugador = new Arquero("Legolas", 1, 100, 100, 12, 8, 6, 20);
+                jugador = new Arquero("Legolas", 2, 100, 100, 12, 8, 6, 20);
                 System.out.println("Has elegido a Legolas, el Arquero.");
 
                 break;
             case 2:
-                jugador = new Mago("Gandalf", 1, 80, 80, 6, 12, 10, 20);
+                jugador = new Mago("Gandalf", 2, 80, 80, 6, 12, 50, 50);
                 System.out.println("Has elegido a Gandalf, el Mago.");
                 break;
             case 3:
-                jugador = new Peleador("Conan", 1, 120, 120, 15, 6, 8, 10);
+                jugador = new Peleador("Conan", 2, 120, 120, 15, 6, 8, 10);
                 System.out.println("Has elegido a Conan, el Peleador.");
                 break;
             default:
@@ -42,6 +43,30 @@ public class JuegoServicio {
                 return;
         }
         System.out.println("¡Bienvenido al juego, " + jugador.getNombre() + "! Prepárate para la aventura.");
+    }
+
+    public void mostrarInventario() {
+        if (jugador == null) {
+            System.out.println("Primero crea un personaje.");
+            return;
+        }
+        System.out.println("Inventario de " + jugador.getNombre() + ":");
+        int total = 0;
+        for (Arma a : jugador.getArmas()) {
+            System.out.println(a);
+            total++;
+        }
+        for (Armadura a : jugador.getArmaduras()) {
+            System.out.println(a);
+            total++;
+        }
+        for (Consumible c : jugador.getConsumibles()) {
+            System.out.println(c);
+            total++;
+        }
+        if (total == 0) {
+            System.out.println("Inventario vacio.");
+        }
     }
 
     public void sortearItem() {
@@ -77,7 +102,22 @@ public class JuegoServicio {
             System.out.println("No hay partida para guardar. Crea un personaje primero.");
             return;
         }
+        List<Personaje> lista = new ArrayList<>();
+        lista.add(jugador);
+        repositorio.guardarPersonajes(lista);
+        repositorio.guardarInventario(lista);
         System.out.println("Partida guardada exitosamente para " + jugador.getNombre() + ".");
+    }
+
+    public void cargarPartida() {
+        List<Personaje> lista = repositorio.cargarPersonajes();
+        if (lista.isEmpty()) {
+            System.out.println("No hay partida para cargar.");
+            return;
+        }
+        repositorio.cargarInventario(lista);
+        jugador = lista.get(0);
+        System.out.println("Partida cargada exitosamente para " + jugador.getNombre() + ".");
     }
 
     public void buscarItem(String nombre) {
@@ -109,7 +149,7 @@ public class JuegoServicio {
         if (!encontrado) {
             System.out.println("No se encontro ningun item con el nombre: " + nombre);
         }
-    }   
+    }
 
     public void eliminarItem(String nombre) {
         if (jugador == null) {
@@ -117,14 +157,17 @@ public class JuegoServicio {
             return;
         }
 
-        boolean eliminado = false;
-
         Iterator<Arma> itArm = jugador.getArmas().iterator();
         while (itArm.hasNext()) {
             Arma a = itArm.next();
             if (a.getNombre().equalsIgnoreCase(nombre)) {
-                itArm.remove();
-                eliminado = true;
+                if (a.getCantidad() > 1) {
+                    a.disminuirCantidad(1);
+                } else {
+                    itArm.remove();
+                }
+                System.out.println("Item eliminado: " + nombre);
+                return;
             }
         }
 
@@ -132,8 +175,13 @@ public class JuegoServicio {
         while (itArmaduras.hasNext()) {
             Armadura a = itArmaduras.next();
             if (a.getNombre().equalsIgnoreCase(nombre)) {
-                itArmaduras.remove();
-                eliminado = true;
+                if (a.getCantidad() > 1) {
+                    a.disminuirCantidad(1);
+                } else {
+                    itArmaduras.remove();
+                }
+                System.out.println("Item eliminado: " + nombre);
+                return;
             }
         }
 
@@ -141,14 +189,16 @@ public class JuegoServicio {
         while (itCons.hasNext()) {
             Consumible c = itCons.next();
             if (c.getNombre().equalsIgnoreCase(nombre)) {
-                itCons.remove();
-                eliminado = true;
+                if (c.getCantidad() > 1) {
+                    c.disminuirCantidad(1);
+                } else {
+                    itCons.remove();
+                }
+                System.out.println("Item eliminado: " + nombre);
+                return;
             }
         }
-
-        if (!eliminado) {
-            System.out.println("No se encontro ningun item con el nombrre: " + nombre);
-        }
+        System.out.println("No se encontro ningun item con el nombrre: " + nombre);
     }
 
     public void filtrarArmas() {
