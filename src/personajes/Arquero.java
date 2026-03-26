@@ -11,85 +11,72 @@ public class Arquero extends Personaje {
     public Arquero(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int precision,
             int agilidad) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if (precision < 0) {
-            throw new IllegalArgumentException("La precision no puede ser negativa.");
-        }
-        if (agilidad < 0) {
-            throw new IllegalArgumentException("La agilidad no puede ser negativa.");
-        }
+        if (precision < 0) throw new IllegalArgumentException("La precision no puede ser negativa.");
+        if (agilidad < 0) throw new IllegalArgumentException("La agilidad no puede ser negativa.");
         this.precision = precision;
         this.agilidad = agilidad;
     }
 
     @Override
+    public String toCSV() {
+        return "Arquero," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," + 
+               getVidaActual() + "," + getDefensa() + "," + getDanio() + "," + 
+               precision + "," + agilidad;
+    }
+
+    public static Arquero fromCSV(String linea) {
+        String[] partes = linea.split(",");
+        return new Arquero(
+            partes[1], 
+            Integer.parseInt(partes[2]), 
+            Integer.parseInt(partes[3]), 
+            Integer.parseInt(partes[4]), 
+            Integer.parseInt(partes[5]), 
+            Integer.parseInt(partes[6]), 
+            Integer.parseInt(partes[7]), 
+            Integer.parseInt(partes[8])
+        );
+    }
+
+    @Override
     public void atacar(Enemigo e) throws ManaInsuficienteException {
         if (!estaVivo()) {
-            System.out.println("El arquero " + getNombre()
-                    + " intento bloquear el ataque con el arma " + getArma()
-                    + "   pero la diosa abandona este mundo, dejandolo morir por un ataque del enemigo"
-                    + getNombre());
+            System.out.println("El arquero " + getNombre() + " murió intentando atacar.");
             return;
         }
-
-        if (e == null) {
-            System.out.println("No hay enemigo objetivo para atacar.");
-            return;
-        }
+        if (e == null) return;
 
         int danioTotal = getDanio() + precision + agilidad;
         if (getArma() != null) {
             if (getArma().estaRota()) {
-                System.out.println("El arma " + getArma().getNombre() + " esta rota, no puede ser usada para atacar.");
+                System.out.println("El arma " + getArma().getNombre() + " esta rota.");
                 return;
             } else {
                 danioTotal += getArma().getDanio();
-                System.out.println(getNombre() + " esta atacando con un " + getArma().getNombre() + " al enemigo "
-                        + e.getNombre());
                 try {
                     getArma().usar();
                 } catch (ArmaRotaException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
-        } else {
-            System.out.println(getNombre() + " esta atacando sin arma al enemigo " + e.getNombre());
         }
         e.recibirDanio(danioTotal);
-
     }
 
     @Override
     public void bloquear() {
-        if (!estaVivo()) {
-            System.out.println("El arquero " + getNombre() + " está muerto y no puede bloquear.");
-            return;
-        }
-
+        if (!estaVivo()) return;
         activarBloqueo();
-        System.out.println(getNombre() + " adopta una posicion defensiva para reducir el daño.");
+        System.out.println(getNombre() + " adopta una posicion defensiva.");
     }
 
     @Override
     public boolean estaVivo() {
-        if (getVidaActual() == 0) {
-            return false;
-        }
-        return true;
+        return getVidaActual() > 0;
     }
 
     @Override
     public String toString() {
-        return "Arquero{" +
-                "nombre='" + getNombre() + '\'' +
-                ", nivel=" + getNivel() +
-                ", vidaActual=" + getVidaActual() +
-                ", vidaMaxima=" + getVidaMaxima() +
-                ", defensa=" + getDefensa() +
-                ", daño=" + getDanio() +
-                ", precision=" + precision +
-                ", agilidad=" + agilidad +
-                ", arma=" + getArma() +
-                ", armadura=" + getArmaduras() +
-                '}';
+        return "Arquero{" + "nombre='" + getNombre() + "', nivel=" + getNivel() + ", precision=" + precision + ", agilidad=" + agilidad + '}';
     }
 }
