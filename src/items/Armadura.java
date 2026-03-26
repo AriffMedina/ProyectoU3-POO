@@ -71,11 +71,17 @@ public class Armadura extends Item implements Durable {
 
     @Override
     public String toCSV(String propietarioString) {
-        return propietarioString + "Armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad + ",";
+        return propietarioString + ",Armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad;
     }
 
     public static Armadura fromCSV(String linea) {
+
+        // Validación
         String[] partes = linea.split(",");
+        if (partes.length < 6) {
+            throw new IllegalArgumentException("Línea inválida, se esperan 6 campos: " + linea);
+        }
+
         return new Armadura(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
                 Integer.parseInt(partes[5]));
     }
