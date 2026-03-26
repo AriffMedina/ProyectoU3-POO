@@ -15,11 +15,13 @@ import java.util.List;
 public class JuegoServicio {
     private Personaje jugador;
     private GestorCombate accion;
+    private GestorEnemigos gestorEnemigos;
     private PartidaRepositorio repositorio;
 
     public JuegoServicio(PartidaRepositorio repositorio) {
         System.out.println("======== Bienvenido al Juego de Rol RPG ========\n");
         accion = new GestorCombate();
+        gestorEnemigos = new GestorEnemigos();
         this.repositorio = repositorio;
     }
 
@@ -215,5 +217,13 @@ public class JuegoServicio {
             }
         }
         System.out.println("Armas disponibles: " + armasFiltradas.size());
+    }
+
+    public Enemigo buscarPorNombre(String nombre) {
+        return gestorEnemigos.buscarPorNombre(nombre);
+    }
+
+    public List<Enemigo> filtrarPorNivel(int nivel) {
+        return gestorEnemigos.filtrarPorNivel(nivel);
     }
 }

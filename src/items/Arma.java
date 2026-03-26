@@ -77,4 +77,3 @@ public abstract class Arma extends Item implements Durable {
                 '}';
     }
 }
-

@@ -3,8 +3,8 @@ package personajes;
 import java.util.ArrayList;
 import java.util.List;
 
-import excepciones.ManaInsuficienteException;
 import enemigos.Enemigo;
+import excepciones.ManaInsuficienteException;
 import items.Arma;
 import items.Armadura;
 import interfaces.Vida;
@@ -55,27 +55,58 @@ public abstract class Personaje implements Vida {
 
     // * Métodos abstractos
     public abstract void atacar(Enemigo e) throws ManaInsuficienteException;
+
     public abstract void bloquear();
-    
+
     // Método para persistencia
     public abstract String toCSV();
 
     // * Getters y Setters
-    public int getNivel() { return nivel; }
-    public String getNombre() { return nombre; }
+    public int getNivel() {
+        return nivel;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
     public Arma getArma() {
-        if (armas.isEmpty()) return null;
+        if (armas.isEmpty())
+            return null;
         return armas.get(armas.size() - 1);
     }
-    public int getDanio() { return danio; }
-    public int getVidaActual() { return vidaActual; }
-    public int getDefensa() { return defensa; }
-    public int getVidaMaxima() { return vidaMaxima; }
-    public List<Arma> getArmas() { return armas; }
-    public List<Armadura> getArmaduras() { return armaduras; }
-    public List<Consumible> getConsumibles() { return consumibles; }
 
-    public void activarBloqueo() { bloqueando = true; }
+    public int getDanio() {
+        return danio;
+    }
+
+    public int getVidaActual() {
+        return vidaActual;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public int getVidaMaxima() {
+        return vidaMaxima;
+    }
+
+    public List<Arma> getArmas() {
+        return armas;
+    }
+
+    public List<Armadura> getArmaduras() {
+        return armaduras;
+    }
+
+    public List<Consumible> getConsumibles() {
+        return consumibles;
+    }
+
+    public void activarBloqueo() {
+        bloqueando = true;
+    }
 
     public int calcularDefensaTotal() {
         int defensaTotal = defensa;
@@ -84,7 +115,8 @@ public abstract class Personaje implements Vida {
             if (!ultima.estaRota()) {
                 defensaTotal += ultima.getDefensa();
                 ultima.reducirDurabilidad(1);
-                System.out.println(getNombre() + " bloquea parte del daño con su armadura " + ultima.getNombre() + ". Defensa total: " + defensaTotal);
+                System.out.println(getNombre() + " bloquea parte del daño con su armadura " + ultima.getNombre()
+                        + ". Defensa total: " + defensaTotal);
             }
         }
         if (bloqueando) {

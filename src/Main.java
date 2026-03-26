@@ -7,107 +7,145 @@ import excepciones.ManaInsuficienteException;
 import items.ArmaMelee;
 import persistencia.RepositorioArchivo;
 import personajes.Mago;
-import rpg.GestorEnemigos;
 import rpg.JuegoServicio;
 
 public class Main {
+    private static Scanner sc = new Scanner(System.in);
+    private static JuegoServicio juego;
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        JuegoServicio juego = new JuegoServicio(new RepositorioArchivo());
+        RepositorioArchivo repositorio = new RepositorioArchivo();
+        juego = new JuegoServicio(repositorio);
 
-        int opcion = -1;
-        while (opcion != 0) {
-            imprimirMenu();
+        mostrarMenu();
+        sc.close();
+    }
+
+    public static void mostrarMenu() {
+        int opcion;
+        do {
+            System.out.println("\n========== MENU RPG ==========");
+            System.out.println("1. Crear personaje");
+            System.out.println("2. Sortear item");
+            System.out.println("3. Mostrar inventario");
+            System.out.println("4. Iniciar combate");
+            System.out.println("5. Guardar partida");
+            System.out.println("6. Cargar partida");
+            System.out.println("7. Filtrado y búsqueda ");
+            System.out.println("8. Probar excepciones");
+            System.out.println("9. Salir");
+            System.out.print(">> Elige una opcion: ");
             opcion = sc.nextInt();
-
             switch (opcion) {
                 case 1:
-                    System.out.print("1=Arquero, 2=Mago, 3=Peleador: ");
-                    int personaje = sc.nextInt();
-                    juego.crearJugador(personaje);
+                    int opcion2;
+                    do {
+                        System.out.println("=== Elige un personaje ===");
+                        System.out.println("1. Arquero");
+                        System.out.println("2. Mago");
+                        System.out.println("3. Peleador");
+                        System.out.print(">> Elige una opcion: ");
+                        opcion2 = sc.nextInt();
+                        juego.crearJugador(opcion2);
+                    } while (opcion2 < 1 || opcion2 > 3);
                     break;
                 case 2:
                     juego.sortearItem();
                     break;
                 case 3:
-                    juego.iniciarCombate();
-                    break;
-                case 4:
-                    GestorEnemigos.generarEnemigo(10);
-                    break;
-                case 5:
-                    juego.usarConsumible();
-                    break;
-                case 6:
-                    juego.guardarPartida();
-                    break;
-                case 7:
-                    juego.cargarPartida();
-                    break;
-                case 8:
-                    System.out.print("Nombre del item a buscar: ");
-                    sc.nextLine();
-                    juego.buscarItem(sc.nextLine());
-                    break;
-                case 9:
-                    System.out.print("Nombre del item a eliminar: ");
-                    sc.nextLine();
-                    juego.eliminarItem(sc.nextLine());
-                    break;
-                case 10:
-                    juego.filtrarArmas();
-                    break;
-                case 11:
-                    PruebaExcepciones();
-                    break;
-                case 12:
                     juego.mostrarInventario();
                     break;
-                case 0:
-                    System.out.println("Saliendo del juego...");
+                case 4:
+                    juego.iniciarCombate();
+                    break;
+                case 5:
+                    juego.guardarPartida();
+                    break;
+                case 6:
+                    juego.cargarPartida();
+                    break;
+                case 7:
+                    filtradoMenu();
+                    break;
+                case 8:
+                    probarExcepciones();
+                    break;
+                case 9:
+                    System.out.println("Saliendo ...");
                     System.out.println("Gracias por jugar!");
                     break;
                 default:
-                    System.out.println("Opcion invalida.");
+                    System.out.println("Opcion no valida.");
+                    break;
             }
+        } while (opcion != 8);
 
-        }
-        sc.close();
     }
 
-    private static void imprimirMenu() {
-        System.out.println("\n========== MENU RPG ==========");
-        System.out.println("1. Crear personaje");
-        System.out.println("2. Sortear item");
-        System.out.println("3. Iniciar combate");
-        System.out.println("4. Generar Enemigo");
-        System.out.println("5. Usar consumible");
-        System.out.println("6. Guardar partida");
-        System.out.println("7. Cargar partida");
-        System.out.println("8. Buscar item");
-        System.out.println("9. Eliminar item");
-        System.out.println("10. Filtrar armas disponibles");
-        System.out.println("11. Probar excepciones");
-        System.out.println("12. Mostrar inventario");
-        System.out.println("0. Salir");
+    public static void filtradoMenu() {
+        System.out.println("1. Enemigos ");
+        System.out.println("2. Items");
+        System.out.println("3. Salir");
         System.out.print(">> Elige una opcion: ");
+        int opcion = sc.nextInt();
+
+        switch (opcion) {
+            case 1:
+                System.out.println("1. Buscar por nombre");
+                System.out.println("2. Filtrar por Nivel");
+                int opcion2 = sc.nextInt();
+                if (opcion2 == 1) {
+                    System.out.println(">> Ingrese el nombre del enemigo: ");
+                    String nombre = sc.next();
+                    juego.buscarPorNombre(nombre);
+                } else if (opcion2 == 2) {
+                    System.out.println(">> Ingrese el nivel del enemigo: ");
+                    int nivel = sc.nextInt();
+                    juego.filtrarPorNivel(nivel);
+                }
+                break;
+            case 2:
+                System.out.println("1. Buscar por nombre");
+                System.out.println("2. Eliminar Item");
+                int opcion3 = sc.nextInt();
+                if (opcion3 == 1) {
+                    System.out.println(">> Ingrese el nombre del item: ");
+                    String nombre = sc.nextLine();
+                    juego.buscarItem(nombre);
+                } else if (opcion3 == 2) {
+                    System.out.println(" >> Ingrese el nombre del item a eliminar: ");
+                    String nombre = sc.nextLine();
+                    juego.eliminarItem(nombre);
+                }
+                break;
+            default:
+                System.out.println("Opcion no valida.");
+                break;
+        }
     }
 
-    private static void PruebaExcepciones() {
+    public static void probarExcepciones() {
+        // 1) ManaInsuficienteException
         Mago magoSinMana = new Mago("Saruman", 1, 80, 80, 2, 12, 5, 20);
         magoSinMana.setArma(new ArmaMelee("Baston oscuro", 1, 10, 10, 5));
         Enemigo esqueleto = new Esqueleto(1);
+
         try {
             magoSinMana.atacar(esqueleto);
         } catch (ManaInsuficienteException e) {
             System.out.println("ManaInsuficienteException capturada: " + e.getMessage());
         }
 
+        // 2) ArmaRotaException
         ArmaMelee armaRota = new ArmaMelee("Espada oxidada", 1, 0, 5, 5);
+
         try {
             armaRota.usar();
         } catch (ArmaRotaException e) {
             System.out.println("ArmaRotaException capturada: " + e.getMessage());
         }
+
+        System.out.println("=== FIN PRUEBA EXCEPCIONES ===\n");
     }
+
 }
