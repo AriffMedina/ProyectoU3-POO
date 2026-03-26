@@ -49,6 +49,11 @@ public class ArmaMelee extends Arma {
     }
 
     @Override
+    public String toCSV(String propietarioString) {
+        return propietarioString + "ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + "," + estamina + ",";
+    }
+
+    @Override
     public String toString() {
         return "|ArmaMelee{" +
                 "\n|— nombre='" + nombre + '\'' +

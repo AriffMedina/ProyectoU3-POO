@@ -63,6 +63,11 @@ public abstract class Arma extends Item implements Durable {
     }
 
     @Override
+    public String toCSV(String propietarioString) {
+        return propietarioString + "Arma," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ",";
+    }
+
+    @Override
     public String toString() {
         return "Arma{" +
                 "nombre='" + nombre + '\'' +

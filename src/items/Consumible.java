@@ -49,6 +49,11 @@ public class Consumible extends Item {
     }
 
     @Override
+    public String toCSV(String propietarioString) {
+        return propietarioString + "Consumible," + nombre + "," + cantidad + "," + curativo + ",";
+    }
+
+    @Override
     public String toString() {
         return "|Consumible{" +
                 "\n|— nombre='" + nombre +

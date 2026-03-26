@@ -55,6 +55,11 @@ public class ArmaDistancia extends Arma {
     }
 
     @Override
+    public String toCSV(String propietarioString) {
+        return propietarioString + "ArmaDistancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + "," + municion + "," + precision + ",";
+    }
+
+    @Override
     public String toString() {
         return "|ArmaDistancia{" +
                 "\n|— nombre='" + nombre + '\'' +

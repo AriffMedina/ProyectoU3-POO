@@ -60,6 +60,11 @@ public class Armadura extends Item implements Durable{
         p.setArmadura(this);
         System.out.println("> Armadura equipada: " + nombre);
     }
+
+    @Override
+    public String toCSV(String propietarioString) {
+        return propietarioString + "Armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad + ",";
+    }
     
     @Override
     public String toString() {

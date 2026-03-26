@@ -28,6 +28,8 @@ public abstract class Item {
 
     public abstract void equiparEn(Personaje p);
 
+    public abstract String toCSV(String propietarioString);
+
     @Override
     public String toString() {
         return "Item{" +
