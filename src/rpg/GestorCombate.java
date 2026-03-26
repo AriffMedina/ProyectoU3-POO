@@ -1,11 +1,9 @@
 package rpg;
 
 import personajes.*;
-
-import java.util.Scanner;
-
-import enemigos.Enemigo;
 import excepciones.ManaInsuficienteException;
+import java.util.Scanner;
+import enemigos.Enemigo;
 import items.Consumible;
 
 public class GestorCombate {
@@ -13,14 +11,13 @@ public class GestorCombate {
     private final Scanner sc = new Scanner(System.in);
 
     public void iniciar(Personaje p, Enemigo e) {
-        int turnos = 0;
-
         if (p == null || e == null) {
             System.out.println("No se puede iniciar el combate sin un personaje o enemigo válido.");
             return;
         }
 
-        System.out.println("¡El combate ha comenzado entre " + p.getNombre() + " y " + e.getNombre() + "!");
+        System.out.println("\n¡El combate ha comenzado entre " + p.getNombre() + " y " + e.getNombre() + "!");
+        int turnos = 0;
 
         while (p.estaVivo() && e.estaVivo() && turnos < max_turnos) {
             turnoJugador(p, e);
@@ -41,67 +38,83 @@ public class GestorCombate {
         } else {
             System.out.println("El combate terminó sin vencedor tras " + max_turnos + " turnos.");
         }
-
     }
 
     public void turnoJugador(Personaje p, Enemigo e) {
-        System.out.println("Es el turno de " + p.getNombre());
-        System.out.println("1. Atacar");
-        System.out.println("2. Bloquear");
-        System.out.println("3. Usar consumible");
-        System.out.println("4. Estado");
-        System.out.print("\n>> Elige una opción: ");
+        boolean turnoCompletado = false;
 
-        int opcion;
-        try {
-            opcion = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException error) {
-            System.out.println("Opción no válida.");
-            sc.nextLine();
-            return;
-        }
+        while (!turnoCompletado) {
+            System.out.println("\n--- Turno de " + p.getNombre() + " ---");
+            System.out.println("1. Atacar");
+            System.out.println("2. Bloquear");
+            System.out.println("3. Usar consumible");
+            System.out.println("4. Estado");
+            System.out.print(">> Elige una opción: ");
 
-        switch (opcion) {
-            case 1:
-                try {
-                    p.atacar(e);
-                    return;
-                } catch (ManaInsuficienteException ex) {
-                    System.out.println("No tienes suficiente mana para atacar." + ex.getMessage());
-                    return;
-                }
-            case 2:
-                realizarBloqueo(p, e);
-                return;
-            case 3:
-                usarConsumible(p);
-                return;
-            case 4:
-                System.out.println(p.toString());
-                System.out.println(e.toString());
-                return;
-            default:
-                System.out.println("Opción no válida.");
-                return;
+            int opcion;
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException error) {
+                System.out.println("Opción no válida. Debes ingresar un número.");
+                continue;
+            }
+
+            switch (opcion) {
+                case 1:
+                    try {
+                        p.atacar(e);
+                        turnoCompletado = true;
+                    } catch (ManaInsuficienteException ex) {
+                        System.out.println("No tienes suficiente mana para atacar. " + ex.getMessage());
+                        System.out.println("¡Por favor, elige otra acción!");
+                    }
+                    break;
+                case 2:
+                    realizarBloqueo(p, e);
+                    turnoCompletado = true;
+                    break;
+                case 3:
+                    if (p.getConsumibles() == null || p.getConsumibles().isEmpty()) {
+                        System.out.println("No tienes ningún consumible en tu inventario.");
+                    } else {
+                        usarConsumible(p);
+                        turnoCompletado = true;
+                    }
+                    break;
+                case 4:
+                    System.out.println("\n[ESTADO]");
+                    System.out.println(p.toString());
+                    System.out.println(e.toString());
+                    // Ver el estado no gasta tu turno, el bucle continuará.
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
         }
     }
 
     public void usarConsumible(Personaje p) {
-        Consumible c = p.getConsumibles().get(0);
-        if (c == null) {
+        if (p.getConsumibles() == null || p.getConsumibles().isEmpty()) {
             System.out.println("No tienes ningún consumible para usar.");
             return;
         }
-        System.out.println("Usando consumible: " + c.getNombre() + " cura " + c.getCurativo() + " puntos de vida.");
+
+        Consumible c = p.getConsumibles().get(0);
+        System.out.println("\nUsando consumible: " + c.getNombre() + " cura " + c.getCurativo() + " puntos de vida.");
+
         int vidaAntes = p.getVidaActual();
         int vidaNueva = c.curar(vidaAntes, p.getVidaMaxima());
         p.setVidaActual(vidaNueva);
+
+        // Removemos el consumible tras usarlo
+        p.getConsumibles().remove(0);
 
         System.out.println("Vida restaurada: " + vidaAntes + " -> " + vidaNueva);
     }
 
     public void calcularTurnoEnemigo(Enemigo e, Personaje p) {
-        System.out.println("Es el turno de " + e.getNombre() + ". El enemigo ataca a " + p.getNombre() + "!");
+        System.out.println("\nEs el turno de " + e.getNombre() + ". ¡El enemigo ataca a " + p.getNombre() + "!");
         e.atacar(p);
     }
 

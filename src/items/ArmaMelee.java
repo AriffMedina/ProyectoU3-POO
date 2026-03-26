@@ -50,20 +50,21 @@ public class ArmaMelee extends Arma {
 
     @Override
     public String toCSV() {
-        return "ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
-                + estamina;
+        return "ArmaMelee," + super.toCSV() + "," + estamina;
     }
 
     public static Arma fromCSV(String linea) {
-
-        // Validación
         String[] partes = linea.split(",");
         if (partes.length < 7) {
             throw new IllegalArgumentException("Línea inválida, se esperan 7 campos: " + linea);
         }
 
-        return new ArmaMelee(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[5]),
-                Integer.parseInt(partes[4]), Integer.parseInt(partes[6]));
+        try {
+            return new ArmaMelee(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[5]),
+                    Integer.parseInt(partes[4]), Integer.parseInt(partes[6]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato de número incorrecto en: " + linea, e);
+        }
     }
 
     @Override

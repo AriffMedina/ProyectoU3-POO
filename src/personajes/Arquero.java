@@ -21,22 +21,25 @@ public class Arquero extends Personaje {
 
     @Override
     public String toCSV() {
-        return "Arquero" + "," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," +
-                getVidaActual() + "," + getDefensa() + "," + getDanio() + "," +
-                precision + "," + agilidad;
+        return "Arquero," + super.toCSV() + "," + precision + "," + agilidad;
     }
 
     public static Arquero fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new Arquero(
-                partes[1],
-                Integer.parseInt(partes[2]),
-                Integer.parseInt(partes[3]),
-                Integer.parseInt(partes[4]),
-                Integer.parseInt(partes[5]),
-                Integer.parseInt(partes[6]),
-                Integer.parseInt(partes[7]),
-                Integer.parseInt(partes[8]));
+        if (partes.length < 9) throw new IllegalArgumentException("Línea inválida para Arquero: " + linea);
+        try {
+            return new Arquero(
+                    partes[1],
+                    Integer.parseInt(partes[2]),
+                    Integer.parseInt(partes[3]),
+                    Integer.parseInt(partes[4]),
+                    Integer.parseInt(partes[5]),
+                    Integer.parseInt(partes[6]),
+                    Integer.parseInt(partes[7]),
+                    Integer.parseInt(partes[8]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error de número en Arquero: " + linea, e);
+        }
     }
 
     @Override

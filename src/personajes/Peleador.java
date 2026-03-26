@@ -16,22 +16,26 @@ public class Peleador extends Personaje {
 
     @Override
     public String toCSV() {
-        return "Peleador," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," +
-                getVidaActual() + "," + getDefensa() + "," + getDanio() + "," +
-                fuerza + "," + resistencia;
+        return "Peleador," + super.toCSV() + "," + fuerza + "," + resistencia;
     }
 
     public static Peleador fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new Peleador(
-                partes[1],
-                Integer.parseInt(partes[2]),
-                Integer.parseInt(partes[3]),
-                Integer.parseInt(partes[4]),
-                Integer.parseInt(partes[5]),
-                Integer.parseInt(partes[6]),
-                Integer.parseInt(partes[7]),
-                Integer.parseInt(partes[8]));
+        if (partes.length < 9)
+            throw new IllegalArgumentException("Línea inválida. Se esperan 9 campos: " + linea);
+        try {
+            return new Peleador(
+                    partes[1],
+                    Integer.parseInt(partes[2]),
+                    Integer.parseInt(partes[3]),
+                    Integer.parseInt(partes[4]),
+                    Integer.parseInt(partes[5]),
+                    Integer.parseInt(partes[6]),
+                    Integer.parseInt(partes[7]),
+                    Integer.parseInt(partes[8]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error de número en Peleador: " + linea, e);
+        }
     }
 
     @Override

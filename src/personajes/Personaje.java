@@ -59,7 +59,9 @@ public abstract class Personaje implements Vida {
     public abstract void bloquear();
 
     // Método para persistencia
-    public abstract String toCSV();
+    public String toCSV() {
+        return nombre + "," + nivel + "," + vidaMaxima + "," + vidaActual + "," + defensa + "," + danio;
+    }
 
     // * Getters y Setters
     public int getNivel() {

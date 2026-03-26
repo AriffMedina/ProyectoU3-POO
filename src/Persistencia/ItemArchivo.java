@@ -24,7 +24,7 @@ public class ItemArchivo {
     }
 
     public void guardarInventario(List<Personaje> lista) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
             for (Personaje p : lista) {
                 for (Arma a : p.getArmas()) {
                     bw.write(p.getNombre() + "," + a.toCSV());
@@ -63,11 +63,14 @@ public class ItemArchivo {
                         continue;
                     }
 
-                    switch (caracteristicas) {
+                    switch (caracteristicas.toLowerCase()) {
                         case "arma_melee":
+                        case "armamelee":
                             p.setArma(ArmaMelee.fromCSV(linea));
                             break;
                         case "arma_distancia":
+                        case "distancia":
+                        case "armadistancia":
                             p.setArma(ArmaDistancia.fromCSV(linea));
                             break;
                         case "armadura":

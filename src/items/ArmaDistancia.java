@@ -56,14 +56,20 @@ public class ArmaDistancia extends Arma {
 
     @Override
     public String toCSV() {
-        return "arma_distancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
-                + municion + "," + precision + ",";
+        return "ArmaDistancia," + super.toCSV() + "," + municion + "," + precision + ",";
     }
 
     public static Arma fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new ArmaDistancia(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
-                Integer.parseInt(partes[5]), Integer.parseInt(partes[6]), Double.parseDouble(partes[7]));
+        if (partes.length < 8) {
+            throw new IllegalArgumentException("Línea inválida, se esperan 8 campos: " + linea);
+        }
+        try {
+            return new ArmaDistancia(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
+                    Integer.parseInt(partes[5]), Integer.parseInt(partes[6]), Double.parseDouble(partes[7]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato de número incorrecto en: " + linea, e);
+        }
     }
 
     @Override

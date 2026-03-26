@@ -38,7 +38,9 @@ public abstract class Item {
         cantidad = Math.max(0, cantidad - valor);
     }
 
-    public abstract String toCSV();
+    public String toCSV() {
+        return nombre + "," + cantidad;
+    }
 
     public abstract void usar() throws ArmaRotaException;
 
