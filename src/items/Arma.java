@@ -62,7 +62,7 @@ public abstract class Arma extends Item implements Durable {
         System.out.println(" Arma equipada: " + nombre);
     }
 
-    public abstract String toCSV(String propietarioString);
+    public abstract String toCSV();
 
     @Override
     public String toString() {
