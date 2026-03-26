@@ -15,11 +15,11 @@ import items.Armadura;
 import items.Consumible;
 import personajes.Personaje;
 
-public class itemArchivo {
+public class ItemArchivo {
 
     private String rutaArchivo;
 
-    public itemArchivo(String rutaArchivo) {
+    public ItemArchivo(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
 
