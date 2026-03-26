@@ -166,4 +166,13 @@ public class JuegoServicio {
         }
         System.out.println("Armas disponibles: " + armasFiltradas.size());
     }
+
+    public static Personaje buscarPorNombre(List<Personaje> personajes, String nombre) {
+        for (Personaje p : personajes) {
+            if (p.getNombre().equals(nombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

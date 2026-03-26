@@ -14,6 +14,7 @@ import items.ArmaMelee;
 import items.Armadura;
 import items.Consumible;
 import personajes.Personaje;
+import rpg.JuegoServicio;
 
 public class ItemArchivo {
 
@@ -57,7 +58,7 @@ public class ItemArchivo {
                     String nombre = partes[0];
                     String caracteristicas = partes[1];
 
-                    Personaje p = buscarPorNombre(personajes, nombre);
+                    Personaje p = JuegoServicio.buscarPorNombre(personajes, nombre);
                     if (p == null) {
                         System.out.println("Dueño no encontrado, línea ignorada: " + linea);
                         continue;
