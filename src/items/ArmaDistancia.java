@@ -56,7 +56,14 @@ public class ArmaDistancia extends Arma {
 
     @Override
     public String toCSV(String propietarioString) {
-        return propietarioString + "ArmaDistancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + "," + municion + "," + precision + ",";
+        return propietarioString + "ArmaDistancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
+                + municion + "," + precision + ",";
+    }
+
+    public static Arma fromCSV(String linea) {
+        String[] partes = linea.split(",");
+        return new ArmaDistancia(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
+                Integer.parseInt(partes[5]), Integer.parseInt(partes[6]), Double.parseDouble(partes[7]));
     }
 
     @Override

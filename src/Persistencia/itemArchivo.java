@@ -27,15 +27,15 @@ public class ItemArchivo {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
             for (Personaje p : lista) {
                 for (Arma a : p.getArmas()) {
-                    bw.write(p.getNombre() + "," + a.toCSV());
+                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
                     bw.newLine();
                 }
                 for (Armadura a : p.getArmaduras()) {
-                    bw.write(p.getNombre() + "," + a.toCSV());
+                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
                     bw.newLine();
                 }
                 for (Consumible c : p.getConsumibles()) {
-                    bw.write(p.getNombre() + "," + c.toCSV());
+                    bw.write(p.getNombre() + "," + c.toCSV(p.getNombre()));
                     bw.newLine();
                 }
             }

@@ -50,7 +50,14 @@ public class ArmaMelee extends Arma {
 
     @Override
     public String toCSV(String propietarioString) {
-        return propietarioString + "ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + "," + estamina + ",";
+        return propietarioString + "ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
+                + estamina + ",";
+    }
+
+    public static Arma fromCSV(String linea) {
+        String[] partes = linea.split(",");
+        return new ArmaMelee(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[5]),
+                Integer.parseInt(partes[4]), Integer.parseInt(partes[6]));
     }
 
     @Override

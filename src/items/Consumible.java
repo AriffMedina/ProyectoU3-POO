@@ -53,6 +53,11 @@ public class Consumible extends Item {
         return propietarioString + "Consumible," + nombre + "," + cantidad + "," + curativo + ",";
     }
 
+    public static Consumible fromCSV(String linea) {
+        String[] partes = linea.split(",");
+        return new Consumible(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]));
+    }
+
     @Override
     public String toString() {
         return "|Consumible{" +

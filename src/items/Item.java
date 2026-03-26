@@ -24,11 +24,11 @@ public abstract class Item {
         return cantidad;
     }
 
+    public abstract String toCSV(String propietarioString);
+
     public abstract void usar() throws ArmaRotaException;
 
     public abstract void equiparEn(Personaje p);
-
-    public abstract String toCSV(String propietarioString);
 
     @Override
     public String toString() {
