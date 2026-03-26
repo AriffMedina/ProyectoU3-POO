@@ -11,7 +11,7 @@ public class GestorItems {
             case 2:
                 return new ArmaMelee("Daga", 1, 10, 10, 5);
             case 3:
-                return new ArmaDistancia("Arco de madera", 15, 10, 5, 5, 0.5);
+                return new ArmaDistancia("Arco de madera", 1, 15, 10, 5, 0.5);
             case 4:
                 return new Armadura("Armadura de piel", 1, 0, 20);
             default:

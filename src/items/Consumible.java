@@ -50,12 +50,19 @@ public class Consumible extends Item {
 
     @Override
     public String toCSV() {
-        return "consumible," + nombre + "," + cantidad + "," + curativo + ",";
+        return "consumible," + super.toCSV() + "," + curativo + ",";
     }
 
     public static Consumible fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new Consumible(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]));
+        if (partes.length < 5) {
+            throw new IllegalArgumentException("Línea inválida para consumible: " + linea);
+        }
+        try {
+            return new Consumible(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato de número incorrecto en: " + linea, e);
+        }
     }
 
     @Override

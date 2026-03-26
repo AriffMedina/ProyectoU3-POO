@@ -17,23 +17,26 @@ public class Mago extends Personaje {
 
     @Override
     public String toCSV() {
-        return "Mago," + getNombre() + "," + getNivel() + "," + getVidaMaxima() + "," + 
-               getVidaActual() + "," + getDefensa() + "," + getDanio() + "," + 
-               mana + "," + manaMaximo;
+        return "Mago," + super.toCSV() + "," + mana + "," + manaMaximo;
     }
 
     public static Mago fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new Mago(
-            partes[1], 
-            Integer.parseInt(partes[2]), 
-            Integer.parseInt(partes[3]), 
-            Integer.parseInt(partes[4]), 
-            Integer.parseInt(partes[5]), 
-            Integer.parseInt(partes[6]), 
-            Integer.parseInt(partes[7]), 
-            Integer.parseInt(partes[8])
-        );
+        if (partes.length < 9) throw new IllegalArgumentException("Línea inválida para Mago: " + linea);
+        try {
+            return new Mago(
+                partes[1], 
+                Integer.parseInt(partes[2]), 
+                Integer.parseInt(partes[3]), 
+                Integer.parseInt(partes[4]), 
+                Integer.parseInt(partes[5]), 
+                Integer.parseInt(partes[6]), 
+                Integer.parseInt(partes[7]), 
+                Integer.parseInt(partes[8])
+            );
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error de número en Mago: " + linea, e);
+        }
     }
 
     @Override

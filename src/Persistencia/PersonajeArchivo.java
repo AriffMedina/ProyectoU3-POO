@@ -23,7 +23,7 @@ public class PersonajeArchivo {
     }
 
     public void guardarPersonajes(List<Personaje> lista) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
             for (Personaje p : lista) {
                 bw.write(p.toCSV());
                 bw.newLine();

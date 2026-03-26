@@ -71,13 +71,20 @@ public class Armadura extends Item implements Durable {
 
     @Override
     public String toCSV() {
-        return "armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad + ",";
+        return "armadura," + super.toCSV() + "," + defensa + "," + durabilidad + ",";
     }
 
     public static Armadura fromCSV(String linea) {
         String[] partes = linea.split(",");
-        return new Armadura(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
-                Integer.parseInt(partes[5]));
+        if (partes.length < 6) {
+            throw new IllegalArgumentException("Línea inválida para armadura: " + linea);
+        }
+        try {
+            return new Armadura(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
+                    Integer.parseInt(partes[5]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato de número incorrecto en: " + linea, e);
+        }
     }
 
     @Override
