@@ -1,4 +1,4 @@
-package Persistencia;
+package persistencia;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,7 +23,7 @@ public class PersonajeArchivo {
     }
 
     public void guardarPersonajes(List<Personaje> lista) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
             for (Personaje p : lista) {
                 bw.write(p.toCSV());
                 bw.newLine();
@@ -33,16 +33,31 @@ public class PersonajeArchivo {
         }
     }
 
+    public Personaje fromCSV(String linea) {
+        String tipo = linea.split(",")[0];
+        switch (tipo) {
+            case "Peleador":
+                return Peleador.fromCSV(linea);
+            case "Mago":
+                return Mago.fromCSV(linea);
+            case "Arquero":
+                return Arquero.fromCSV(linea);
+            default:
+                throw new IllegalArgumentException("Tipo de personaje desconocido: " + tipo);
+        }
+    }
+
     public List<Personaje> cargarPersonajes() {
         List<Personaje> lista = new ArrayList<>();
         File archivo = new File(rutaArchivo);
-        if (!archivo.exists()) return lista;
+        if (!archivo.exists())
+            return lista;
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 try {
-                    Personaje p = personajeFromCSV(linea);
+                    Personaje p = fromCSV(linea);
                     lista.add(p);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Línea corrupta ignorada: " + linea);

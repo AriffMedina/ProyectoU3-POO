@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 import personajes.Personaje;
 
 public abstract class Item {
@@ -24,7 +24,21 @@ public abstract class Item {
         return cantidad;
     }
 
-    public abstract String toCSV(String propietarioString);
+    public void aumentarCantidad(int extra) {
+        if (extra <= 0) {
+            return;
+        }
+        cantidad += extra;
+    }
+
+    public void disminuirCantidad(int valor) {
+        if (valor <= 0) {
+            return;
+        }
+        cantidad = Math.max(0, cantidad - valor);
+    }
+
+    public abstract String toCSV();
 
     public abstract void usar() throws ArmaRotaException;
 

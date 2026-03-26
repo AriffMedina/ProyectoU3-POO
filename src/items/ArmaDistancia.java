@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 
 public class ArmaDistancia extends Arma {
     private int municion;
@@ -55,19 +55,13 @@ public class ArmaDistancia extends Arma {
     }
 
     @Override
-    public String toCSV(String propietarioString) {
-        return propietarioString + "ArmaDistancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
-                + municion + "," + precision;
+    public String toCSV() {
+        return "arma_distancia," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
+                + municion + "," + precision + ",";
     }
 
     public static Arma fromCSV(String linea) {
-
-        // Validación
         String[] partes = linea.split(",");
-        if (partes.length < 8) {
-            throw new IllegalArgumentException("Línea inválida, se esperan 8 campos: " + linea);
-        }
-
         return new ArmaDistancia(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
                 Integer.parseInt(partes[5]), Integer.parseInt(partes[6]), Double.parseDouble(partes[7]));
     }
@@ -75,12 +69,12 @@ public class ArmaDistancia extends Arma {
     @Override
     public String toString() {
         return "|ArmaDistancia{" +
-                "\n|— nombre='" + nombre + '\'' +
-                "\n|— cantidad=" + cantidad +
-                "\n|— danio=" + danio +
-                "\n|— durabilidad=" + durabilidad +
-                "\n|— municion=" + municion +
-                "\n|— precision=" + precision +
+                "\n|- nombre='" + nombre + '\'' +
+                "\n|- cantidad=" + cantidad +
+                "\n|- danio=" + danio +
+                "\n|- durabilidad=" + durabilidad +
+                "\n|- municion=" + municion +
+                "\n|- precision=" + precision +
                 '\n' + '}';
     }
 }

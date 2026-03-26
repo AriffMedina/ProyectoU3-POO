@@ -49,27 +49,22 @@ public class Consumible extends Item {
     }
 
     @Override
-    public String toCSV(String propietarioString) {
-        return propietarioString + ",Consumible," + nombre + "," + cantidad + "," + curativo;
+    public String toCSV() {
+        return "consumible," + nombre + "," + cantidad + "," + curativo + ",";
     }
 
     public static Consumible fromCSV(String linea) {
-
-        // Validación
         String[] partes = linea.split(",");
-        if (partes.length < 5) {
-            throw new IllegalArgumentException("Línea inválida, se esperan 5 campos: " + linea);
-        }
-
         return new Consumible(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]));
     }
 
     @Override
     public String toString() {
         return "|Consumible{" +
-                "\n|— nombre='" + nombre +
-                "\n|— cantidad=" + cantidad +
-                "\n|— curativo=" + curativo +
+                "\n|- nombre='" + nombre +
+                "\n|- cantidad=" + cantidad +
+                "\n|- curativo=" + curativo +
                 '\n' + '}';
     }
 }
+

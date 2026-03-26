@@ -1,21 +1,26 @@
 package rpg;
 
 import personajes.*;
-import Excepciones.ManaInsuficienteException;
+
+import java.util.Scanner;
+
 import enemigos.Enemigo;
+import excepciones.ManaInsuficienteException;
 import items.Consumible;
 
 public class GestorCombate {
     private static final int max_turnos = 50;
+    private final Scanner sc = new Scanner(System.in);
 
     public void iniciar(Personaje p, Enemigo e) {
+        int turnos = 0;
+
         if (p == null || e == null) {
             System.out.println("No se puede iniciar el combate sin un personaje o enemigo válido.");
             return;
         }
 
         System.out.println("¡El combate ha comenzado entre " + p.getNombre() + " y " + e.getNombre() + "!");
-        int turnos = 0;
 
         while (p.estaVivo() && e.estaVivo() && turnos < max_turnos) {
             turnoJugador(p, e);
@@ -40,11 +45,44 @@ public class GestorCombate {
     }
 
     public void turnoJugador(Personaje p, Enemigo e) {
-        System.out.println("Es el turno de " + p.getNombre() + ". Ataca a " + e.getNombre() + "!");
+        System.out.println("Es el turno de " + p.getNombre());
+        System.out.println("1. Atacar");
+        System.out.println("2. Bloquear");
+        System.out.println("3. Usar consumible");
+        System.out.println("4. Estado");
+        System.out.print("\n>> Elige una opción: ");
+
+        int opcion;
         try {
-            p.atacar(e);
-        } catch (ManaInsuficienteException ex) {
-            System.out.println(ex.getMessage());
+            opcion = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException error) {
+            System.out.println("Opción no válida.");
+            sc.nextLine();
+            return;
+        }
+
+        switch (opcion) {
+            case 1:
+                try {
+                    p.atacar(e);
+                    return;
+                } catch (ManaInsuficienteException ex) {
+                    System.out.println("No tienes suficiente mana para atacar." + ex.getMessage());
+                    return;
+                }
+            case 2:
+                realizarBloqueo(p, e);
+                return;
+            case 3:
+                usarConsumible(p);
+                return;
+            case 4:
+                System.out.println(p.toString());
+                System.out.println(e.toString());
+                return;
+            default:
+                System.out.println("Opción no válida.");
+                return;
         }
     }
 
@@ -74,5 +112,4 @@ public class GestorCombate {
                 + (e != null ? e.getNombre() : "el enemigo") + ".");
         p.bloquear();
     }
-
 }

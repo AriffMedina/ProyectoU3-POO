@@ -70,18 +70,12 @@ public class Armadura extends Item implements Durable {
     }
 
     @Override
-    public String toCSV(String propietarioString) {
-        return propietarioString + ",Armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad;
+    public String toCSV() {
+        return "armadura," + nombre + "," + cantidad + "," + defensa + "," + durabilidad + ",";
     }
 
     public static Armadura fromCSV(String linea) {
-
-        // Validación
         String[] partes = linea.split(",");
-        if (partes.length < 6) {
-            throw new IllegalArgumentException("Línea inválida, se esperan 6 campos: " + linea);
-        }
-
         return new Armadura(partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]),
                 Integer.parseInt(partes[5]));
     }
@@ -89,11 +83,11 @@ public class Armadura extends Item implements Durable {
     @Override
     public String toString() {
         return "|Armadura{" +
-                "\n|— nombre='" + nombre + '\'' +
-                "\n|— cantidad=" + cantidad +
-                "\n|— defensa=" + defensa +
-                "\n|— durabilidad=" + durabilidad +
-                "\n|— durabilidadMaxima=" + durabilidadMaxima +
+                "\n|- nombre='" + nombre + '\'' +
+                "\n|- cantidad=" + cantidad +
+                "\n|- defensa=" + defensa +
+                "\n|- durabilidad=" + durabilidad +
+                "\n|- durabilidadMaxima=" + durabilidadMaxima +
                 '\n' + '}';
     }
 }

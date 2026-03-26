@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 
 public class ArmaMelee extends Arma {
     private int estamina;
@@ -49,8 +49,8 @@ public class ArmaMelee extends Arma {
     }
 
     @Override
-    public String toCSV(String propietarioString) {
-        return propietarioString + ",ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
+    public String toCSV() {
+        return "ArmaMelee," + nombre + "," + cantidad + "," + danio + "," + durabilidad + ","
                 + estamina;
     }
 

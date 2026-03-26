@@ -1,4 +1,4 @@
-package Persistencia;
+package persistencia;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +14,6 @@ import items.ArmaMelee;
 import items.Armadura;
 import items.Consumible;
 import personajes.Personaje;
-import rpg.JuegoServicio;
 
 public class ItemArchivo {
 
@@ -24,19 +23,19 @@ public class ItemArchivo {
         this.rutaArchivo = rutaArchivo;
     }
 
-    public void guardarInventario(List<Personaje> lista) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {
+    public void guardarInventario(List<Personaje> lista) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
             for (Personaje p : lista) {
                 for (Arma a : p.getArmas()) {
-                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + a.toCSV());
                     bw.newLine();
                 }
                 for (Armadura a : p.getArmaduras()) {
-                    bw.write(p.getNombre() + "," + a.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + a.toCSV());
                     bw.newLine();
                 }
                 for (Consumible c : p.getConsumibles()) {
-                    bw.write(p.getNombre() + "," + c.toCSV(p.getNombre()));
+                    bw.write(p.getNombre() + "," + c.toCSV());
                     bw.newLine();
                 }
             }
@@ -45,7 +44,7 @@ public class ItemArchivo {
         }
     }
 
-    public void cargarInventario(List<Personaje> personajes) throws IOException {
+    public void cargarInventario(List<Personaje> personajes) {
         File archivo = new File(rutaArchivo);
         if (!archivo.exists())
             return;
@@ -58,7 +57,7 @@ public class ItemArchivo {
                     String nombre = partes[0];
                     String caracteristicas = partes[1];
 
-                    Personaje p = JuegoServicio.buscarPorNombre(personajes, nombre);
+                    Personaje p = buscarPorNombre(personajes, nombre);
                     if (p == null) {
                         System.out.println("Dueño no encontrado, línea ignorada: " + linea);
                         continue;
@@ -87,5 +86,13 @@ public class ItemArchivo {
         } catch (IOException e) {
             System.out.println("Error al cargar el inventario: " + e.getMessage());
         }
+    }
+
+    private Personaje buscarPorNombre(List<Personaje> lista, String nombre) {
+        for (Personaje p : lista) {
+            if (p.getNombre().equalsIgnoreCase(nombre))
+                return p;
+        }
+        return null;
     }
 }
