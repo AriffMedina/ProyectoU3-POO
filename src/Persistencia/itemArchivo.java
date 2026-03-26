@@ -87,12 +87,4 @@ public class ItemArchivo {
             System.out.println("Error al cargar el inventario: " + e.getMessage());
         }
     }
-
-    private Personaje buscarPorNombre(List<Personaje> lista, String nombre) {
-        for (Personaje p : lista) {
-            if (p.getNombre().equalsIgnoreCase(nombre))
-                return p;
-        }
-        return null;
     }
-}
