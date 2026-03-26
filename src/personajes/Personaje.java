@@ -3,8 +3,8 @@ package personajes;
 import java.util.ArrayList;
 import java.util.List;
 
-import enemigos.Enemigo;
 import excepciones.ManaInsuficienteException;
+import enemigos.Enemigo;
 import items.Arma;
 import items.Armadura;
 import interfaces.Vida;

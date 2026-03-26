@@ -78,7 +78,7 @@ public class Main {
                     System.out.println("Opcion no valida.");
                     break;
             }
-        } while (opcion != 8);
+        } while (opcion != 9);
 
     }
 
