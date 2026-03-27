@@ -1,4 +1,4 @@
-package persistencia;
+package Persistencia;
 
 import interfaces.PartidaRepositorio;
 import java.util.List;

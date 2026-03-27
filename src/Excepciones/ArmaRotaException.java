@@ -1,4 +1,4 @@
-package excepciones;
+package Excepciones;
 
 public class ArmaRotaException extends Exception {
 

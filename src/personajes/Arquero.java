@@ -1,8 +1,8 @@
 package personajes;
 
 import enemigos.Enemigo;
-import excepciones.ArmaRotaException;
-import excepciones.ManaInsuficienteException;
+import Excepciones.ArmaRotaException;
+import Excepciones.ManaInsuficienteException;
 
 public class Arquero extends Personaje {
     private int precision;

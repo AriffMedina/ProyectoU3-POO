@@ -1,4 +1,4 @@
-package excepciones;
+package Excepciones;
 
 public class ManaInsuficienteException extends Exception {
 

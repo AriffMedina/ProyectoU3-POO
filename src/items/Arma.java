@@ -1,7 +1,7 @@
 package items;
 
 import personajes.Personaje;
-import excepciones.ArmaRotaException;
+import Excepciones.ArmaRotaException;
 import interfaces.Durable;
 
 public abstract class Arma extends Item implements Durable {

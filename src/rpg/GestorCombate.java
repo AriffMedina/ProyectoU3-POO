@@ -1,7 +1,7 @@
 package rpg;
 
 import personajes.*;
-import excepciones.ManaInsuficienteException;
+import Excepciones.ManaInsuficienteException;
 import java.util.Scanner;
 import enemigos.Enemigo;
 import items.Consumible;
