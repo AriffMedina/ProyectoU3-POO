@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 import enemigos.Enemigo;
 import enemigos.Esqueleto;
-import Excepciones.ArmaRotaException;
-import Excepciones.ManaInsuficienteException;
+import excepciones.ArmaRotaException;
+import excepciones.ManaInsuficienteException;
 import items.ArmaMelee;
-import Persistencia.RepositorioArchivo;
+import persistencia.RepositorioArchivo;
 import personajes.Mago;
 import rpg.JuegoServicio;
 

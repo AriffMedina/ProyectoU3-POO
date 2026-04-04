@@ -1,7 +1,7 @@
 package personajes;
 
 import enemigos.Enemigo;
-import Excepciones.ManaInsuficienteException;
+import excepciones.ManaInsuficienteException;
 
 public class Peleador extends Personaje {
     private int fuerza;

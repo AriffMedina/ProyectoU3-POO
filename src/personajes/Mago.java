@@ -1,7 +1,7 @@
 package personajes;
 
 import enemigos.Enemigo;
-import Excepciones.ManaInsuficienteException;
+import excepciones.ManaInsuficienteException;
 
 public class Mago extends Personaje {
     private int mana;
@@ -10,7 +10,8 @@ public class Mago extends Personaje {
     public Mago(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int mana,
             int manaMaximo) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
-        if (manaMaximo <= 0) throw new IllegalArgumentException("El mana maximo debe ser mayor a 0");
+        if (manaMaximo <= 0)
+            throw new IllegalArgumentException("El mana maximo debe ser mayor a 0");
         this.mana = mana;
         this.manaMaximo = manaMaximo;
     }
@@ -22,18 +23,18 @@ public class Mago extends Personaje {
 
     public static Mago fromCSV(String linea) {
         String[] partes = linea.split(",");
-        if (partes.length < 9) throw new IllegalArgumentException("Línea inválida para Mago: " + linea);
+        if (partes.length < 9)
+            throw new IllegalArgumentException("Línea inválida para Mago: " + linea);
         try {
             return new Mago(
-                partes[1], 
-                Integer.parseInt(partes[2]), 
-                Integer.parseInt(partes[3]), 
-                Integer.parseInt(partes[4]), 
-                Integer.parseInt(partes[5]), 
-                Integer.parseInt(partes[6]), 
-                Integer.parseInt(partes[7]), 
-                Integer.parseInt(partes[8])
-            );
+                    partes[1],
+                    Integer.parseInt(partes[2]),
+                    Integer.parseInt(partes[3]),
+                    Integer.parseInt(partes[4]),
+                    Integer.parseInt(partes[5]),
+                    Integer.parseInt(partes[6]),
+                    Integer.parseInt(partes[7]),
+                    Integer.parseInt(partes[8]));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Error de número en Mago: " + linea, e);
         }
@@ -41,9 +42,12 @@ public class Mago extends Personaje {
 
     @Override
     public void atacar(Enemigo e) throws ManaInsuficienteException {
-        if (!estaVivo()) return;
-        if (getArma() == null) return;
-        if (mana < 10) throw new ManaInsuficienteException("Mana insuficiente: " + mana);
+        if (!estaVivo())
+            return;
+        if (getArma() == null)
+            return;
+        if (mana < 10)
+            throw new ManaInsuficienteException("Mana insuficiente: " + mana);
 
         int danioTotal = getDanio() + getArma().getDanio() + mana;
         e.recibirDanio(danioTotal);
@@ -57,7 +61,8 @@ public class Mago extends Personaje {
 
     @Override
     public void bloquear() {
-        if (!estaVivo()) return;
+        if (!estaVivo())
+            return;
         activarBloqueo();
     }
 

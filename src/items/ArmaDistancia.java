@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 
 public class ArmaDistancia extends Arma {
     private int municion;

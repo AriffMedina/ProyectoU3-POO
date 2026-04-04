@@ -1,9 +1,10 @@
 package rpg;
 
 import personajes.*;
-import Excepciones.ManaInsuficienteException;
+
 import java.util.Scanner;
 import enemigos.Enemigo;
+import excepciones.ManaInsuficienteException;
 import items.Consumible;
 
 public class GestorCombate {

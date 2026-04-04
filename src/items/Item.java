@@ -1,6 +1,6 @@
 package items;
 
-import Excepciones.ArmaRotaException;
+import excepciones.ArmaRotaException;
 import personajes.Personaje;
 
 public abstract class Item {

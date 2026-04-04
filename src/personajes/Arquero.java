@@ -1,8 +1,8 @@
 package personajes;
 
 import enemigos.Enemigo;
-import Excepciones.ArmaRotaException;
-import Excepciones.ManaInsuficienteException;
+import excepciones.ArmaRotaException;
+import excepciones.ManaInsuficienteException;
 
 public class Arquero extends Personaje {
     private int precision;
@@ -26,7 +26,8 @@ public class Arquero extends Personaje {
 
     public static Arquero fromCSV(String linea) {
         String[] partes = linea.split(",");
-        if (partes.length < 9) throw new IllegalArgumentException("Línea inválida para Arquero: " + linea);
+        if (partes.length < 9)
+            throw new IllegalArgumentException("Línea inválida para Arquero: " + linea);
         try {
             return new Arquero(
                     partes[1],
