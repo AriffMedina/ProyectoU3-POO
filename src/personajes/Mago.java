@@ -16,6 +16,14 @@ public class Mago extends Personaje {
         this.manaMaximo = manaMaximo;
     }
 
+    public int getMana() {
+        return mana;
+    }
+
+    public int getManaMaximo() {
+        return manaMaximo;
+    }
+
     @Override
     public String toCSV() {
         return "Mago," + super.toCSV() + "," + mana + "," + manaMaximo;
@@ -44,12 +52,12 @@ public class Mago extends Personaje {
     public void atacar(Enemigo e) throws ManaInsuficienteException {
         if (!estaVivo())
             return;
-        if (getArma() == null)
-            return;
         if (mana < 10)
             throw new ManaInsuficienteException("Mana insuficiente: " + mana);
 
-        int danioTotal = getDanio() + getArma().getDanio() + mana;
+        int danioTotal = getDanio() + mana;
+        if (getArma() != null)
+            danioTotal += getArma().getDanio();
         e.recibirDanio(danioTotal);
         mana -= 10;
     }
@@ -73,6 +81,6 @@ public class Mago extends Personaje {
 
     @Override
     public String toString() {
-        return "Mago{" + "nombre='" + getNombre() + "', mana=" + mana + "/" + manaMaximo + '}';
+        return "Mago{" + "nombre='" + getNombre() + "', mana=" + getMana() + "/" + getManaMaximo() + '}';
     }
 }

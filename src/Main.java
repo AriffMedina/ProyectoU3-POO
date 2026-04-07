@@ -76,10 +76,10 @@ public class Main {
                     juego.iniciarCombate();
                     break;
                 case 5:
-                    juego.guardarPartida();
+                    System.out.println(juego.guardarPartida());
                     break;
                 case 6:
-                    juego.cargarPartida();
+                    System.out.println(juego.cargarPartida());
                     break;
                 case 7:
                     filtradoMenu();

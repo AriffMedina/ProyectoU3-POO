@@ -84,7 +84,6 @@ public class Arquero extends Personaje {
 
     @Override
     public String toString() {
-        return "Arquero{" + "nombre='" + getNombre() + "', nivel=" + getNivel() + ", precision=" + precision
-                + ", agilidad=" + agilidad + '}';
+        return "Arquero{" + "nombre='" + getNombre() + "', precision=" + precision + ", agilidad=" + agilidad + '}';
     }
 }
