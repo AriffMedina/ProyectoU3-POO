@@ -19,10 +19,10 @@ public class JuegoServicio {
     private PartidaRepositorio repositorio;
 
     public JuegoServicio(PartidaRepositorio repositorio) {
-        System.out.println("======== Bienvenido al Juego de Rol RPG ========\n");
         accion = new GestorCombate();
         gestorEnemigos = new GestorEnemigos();
         this.repositorio = repositorio;
+        cargarPartida();
     }
 
     public void crearJugador(int opcion) {
@@ -45,6 +45,7 @@ public class JuegoServicio {
                 return;
         }
         System.out.println("¡Bienvenido al juego, " + jugador.getNombre() + "! Prepárate para la aventura.");
+        guardarPartida();
     }
 
     public void mostrarInventario() {
@@ -80,6 +81,7 @@ public class JuegoServicio {
         Item i = GestorItems.generarItem();
         System.out.println("Obtuviste: " + i.getNombre());
         i.equiparEn(jugador);
+        guardarPartida();
     }
 
     public void iniciarCombate() {
@@ -89,6 +91,7 @@ public class JuegoServicio {
         }
         Enemigo enemigo = GestorEnemigos.generarEnemigo(jugador.getNivel());
         accion.iniciar(jugador, enemigo);
+        guardarPartida();
     }
 
     public void usarConsumible() {
@@ -97,29 +100,29 @@ public class JuegoServicio {
             return;
         }
         accion.usarConsumible(jugador);
+        guardarPartida();
     }
 
-    public void guardarPartida() {
+    public String guardarPartida() {
         if (jugador == null) {
-            System.out.println("No hay partida para guardar. Crea un personaje primero.");
-            return;
+            System.out.println("Primero crea un personaje.");
+            return "No se pudo guardar la partida porque no hay un personaje creado.";
         }
         List<Personaje> lista = new ArrayList<>();
         lista.add(jugador);
         repositorio.guardarPersonajes(lista);
         repositorio.guardarInventario(lista);
-        System.out.println("Partida guardada exitosamente para " + jugador.getNombre() + ".");
+        return "Partida guardada exitosamente para " + jugador.getNombre() + ".";
     }
 
-    public void cargarPartida() {
+    public String cargarPartida() {
         List<Personaje> lista = repositorio.cargarPersonajes();
         if (lista.isEmpty()) {
-            System.out.println("No hay partida para cargar.");
-            return;
+            return "No hay partida para cargar.";
         }
         repositorio.cargarInventario(lista);
         jugador = lista.get(0);
-        System.out.println("Partida cargada exitosamente para " + jugador.getNombre() + ".");
+        return "Partida cargada exitosamente para " + jugador.getNombre() + ".";
     }
 
     public void buscarItem(String nombre) {
@@ -169,6 +172,7 @@ public class JuegoServicio {
                     itArm.remove();
                 }
                 System.out.println("Item eliminado: " + nombre);
+                guardarPartida();
                 return;
             }
         }
@@ -183,6 +187,7 @@ public class JuegoServicio {
                     itArmaduras.remove();
                 }
                 System.out.println("Item eliminado: " + nombre);
+                guardarPartida();
                 return;
             }
         }
@@ -197,6 +202,7 @@ public class JuegoServicio {
                     itCons.remove();
                 }
                 System.out.println("Item eliminado: " + nombre);
+                guardarPartida();
                 return;
             }
         }

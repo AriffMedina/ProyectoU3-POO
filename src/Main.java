@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) {
         RepositorioArchivo repositorio = new RepositorioArchivo();
         juego = new JuegoServicio(repositorio);
+        System.out.println("========== Bienvenido al Juego de Rol RPG =========");
 
         mostrarMenu();
         sc.close();
