@@ -71,7 +71,7 @@ public class Armadura extends Item implements Durable {
 
     @Override
     public String toCSV() {
-        return "armadura," + super.toCSV() + "," + defensa + "," + durabilidad + ",";
+        return "armadura," + super.toCSV() + "," + defensa + "," + durabilidad;
     }
 
     public static Armadura fromCSV(String linea) {

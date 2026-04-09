@@ -50,7 +50,7 @@ public class Consumible extends Item {
 
     @Override
     public String toCSV() {
-        return "consumible," + super.toCSV() + "," + curativo + ",";
+        return "consumible," + super.toCSV() + "," + curativo;
     }
 
     public static Consumible fromCSV(String linea) {
@@ -74,4 +74,3 @@ public class Consumible extends Item {
                 '\n' + '}';
     }
 }
-
