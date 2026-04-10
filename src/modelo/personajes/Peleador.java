@@ -10,6 +10,10 @@ public class Peleador extends Personaje {
     public Peleador(String nombre, int nivel, int vidaMaxima, int vidaActual, int defensa, int danio, int fuerza,
             int resistencia) {
         super(nombre, nivel, vidaMaxima, vidaActual, defensa, danio);
+        if (fuerza < 0)
+            throw new IllegalArgumentException("La fuerza no puede ser negativa.");
+        if (resistencia < 0)
+            throw new IllegalArgumentException("La resistencia no puede ser negativa.");
         this.fuerza = fuerza;
         this.resistencia = resistencia;
     }
