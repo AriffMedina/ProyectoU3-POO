@@ -82,8 +82,12 @@ public class ItemArchivo {
                         default:
                             System.out.println("Tipo de ítem desconocido: " + caracteristicas);
                     }
-                } catch (Exception e) {
-                    System.out.println("Linea ignorada: " + linea);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Línea con formato incorrecto (faltan campos): " + linea);
+                } catch (NumberFormatException e) {
+                    System.out.println("Línea con valor numérico inválido: " + linea);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Línea con datos inválidos (" + e.getMessage() + "): " + linea);
                 }
             }
         } catch (IOException e) {
