@@ -222,7 +222,10 @@ public class JuegoServicio {
                 armasFiltradas.add(a);
             }
         }
-        System.out.println("Armas disponibles: " + armasFiltradas.size());
+        System.out.println("Armas disponibles:");
+        for (Arma a : armasFiltradas) {
+            System.out.println("- " + a);
+        }
     }
 
     public Enemigo buscarPorNombre(String nombre) {
