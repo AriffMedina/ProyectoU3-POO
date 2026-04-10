@@ -56,7 +56,7 @@ public class ArmaDistancia extends Arma {
 
     @Override
     public String toCSV() {
-        return "ArmaDistancia," + super.toCSV() + "," + municion + "," + precision + ",";
+        return "ArmaDistancia," + super.toCSV() + "," + municion + "," + precision;
     }
 
     public static Arma fromCSV(String linea) {
