@@ -1,12 +1,6 @@
 import java.util.Scanner;
 
-import enemigos.Enemigo;
-import enemigos.Esqueleto;
-import excepciones.ArmaRotaException;
-import excepciones.ManaInsuficienteException;
-import items.ArmaMelee;
 import persistencia.RepositorioArchivo;
-import personajes.Mago;
 import rpg.JuegoServicio;
 
 public class Main {
@@ -25,22 +19,23 @@ public class Main {
     public static void mostrarMenu() {
         int opcion = 0;
         do {
-            System.out.println("\n========== MENU RPG ==========");
-            System.out.println("1. Crear personaje");
-            System.out.println("2. Sortear item");
-            System.out.println("3. Mostrar inventario");
-            System.out.println("4. Iniciar combate");
-            System.out.println("5. Guardar partida");
-            System.out.println("6. Cargar partida");
-            System.out.println("7. Filtrado y búsqueda");
-            System.out.println("8. Probar excepciones");
-            System.out.println("9. Salir");
+            System.out.println("\n|========== MENU RPG ==========|");
+            System.out.println("|1. Crear personaje            |");
+            System.out.println("|2. Sortear item               |");
+            System.out.println("|3. Mostrar inventario         |");
+            System.out.println("|4. Iniciar combate            |");
+            System.out.println("|5. Guardar partida            |");
+            System.out.println("|6. Cargar partida             |");
+            System.out.println("|7. Filtrado y búsqueda        |");
+            System.out.println("|8. Probar excepciones         |");
+            System.out.println("|9. Salir                      |");
+            System.out.println("|==============================|");
             System.out.print(">> Elige una opcion: ");
 
             try {
                 opcion = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Por favor, ingresa un número.");
+                System.out.println("|!|: Entrada inválida. Por favor, ingresa un número.");
                 opcion = 0;
                 continue;
             }
@@ -49,31 +44,32 @@ public class Main {
                 case 1:
                     int opcion2 = 0;
                     do {
-                        System.out.println("\n=== Elige un personaje ===");
-                        System.out.println("1. Arquero");
-                        System.out.println("2. Mago");
-                        System.out.println("3. Peleador");
+                        System.out.println("\n|=== Elige un personaje ===|");
+                        System.out.println("|1. Arquero                |");
+                        System.out.println("|2. Mago                   |");
+                        System.out.println("|3. Peleador               |");
+                        System.out.println("|==========================|");
                         System.out.print(">> Elige una opcion: ");
                         try {
                             opcion2 = Integer.parseInt(sc.nextLine());
                             if (opcion2 >= 1 && opcion2 <= 3) {
                                 juego.crearJugador(opcion2);
                             } else {
-                                System.out.println("Opción no válida. Intenta de nuevo.");
+                                System.out.println("|!|: Opción no válida. Intenta de nuevo.");
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("Entrada inválida. Por favor, ingresa un número.");
+                            System.out.println("|!|: Entrada inválida. Por favor, ingresa un número.");
                         }
                     } while (opcion2 < 1 || opcion2 > 3);
                     break;
                 case 2:
-                    juego.sortearItem();
+                    System.out.println(juego.sortearItem());
                     break;
                 case 3:
-                    juego.mostrarInventario();
+                    System.out.println(juego.mostrarInventario());
                     break;
                 case 4:
-                    juego.iniciarCombate();
+                    System.out.println(juego.iniciarCombate());
                     break;
                 case 5:
                     System.out.println(juego.guardarPartida());
@@ -85,14 +81,14 @@ public class Main {
                     filtradoMenu();
                     break;
                 case 8:
-                    probarExcepciones();
+                    System.out.println(juego.probarExcepciones());
                     break;
                 case 9:
                     System.out.println("Saliendo ...");
                     System.out.println("Gracias por jugar!");
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("|!|: Opción no válida.");
                     break;
             }
         } while (opcion != 9);
@@ -100,30 +96,34 @@ public class Main {
     }
 
     public static void filtradoMenu() {
-        System.out.println("\n=== Filtrado y Búsqueda ===");
-        System.out.println("1. Enemigos");
-        System.out.println("2. Items");
-        System.out.println("3. Salir");
+        System.out.println("\n|=== Filtrado y Búsqueda ===|");
+        System.out.println("|1. Enemigos                  |");
+        System.out.println("|2. Items                     |");
+        System.out.println("|3. Salir                     |");
+        System.out.println("|=============================|");
         System.out.print(">> Elige una opcion: ");
 
         int opcion = 0;
         try {
             opcion = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Debe ser un número.");
+            System.out.println("|!|: Entrada inválida. Debe ser un número.");
             return;
         }
 
         switch (opcion) {
             case 1:
-                System.out.println("\n1. Buscar por nombre");
-                System.out.println("2. Filtrar por Nivel");
+                System.out.println("\n|=== Filtrado y Búsqueda ===|");
+                System.out.println("|1. Buscar por nombre         |");
+                System.out.println("|2. Filtrar por Nivel         |");
+                System.out.println("|3. Salir                     |");
+                System.out.println("|=============================|");
                 System.out.print(">> Elige una opcion: ");
                 int opcion2 = 0;
                 try {
                     opcion2 = Integer.parseInt(sc.nextLine());
                 } catch (NumberFormatException e) {
-                    System.out.println("Entrada inválida.");
+                    System.out.println("|!|: Entrada inválida.");
                     break;
                 }
 
@@ -137,62 +137,44 @@ public class Main {
                         int nivel = Integer.parseInt(sc.nextLine());
                         juego.filtrarPorNivel(nivel);
                     } catch (NumberFormatException e) {
-                        System.out.println("Nivel inválido.");
+                        System.out.println("|!|: Nivel inválido.");
                     }
                 } else {
-                    System.out.println("Opción no válida.");
+                    System.out.println("|!|: Opción no válida.");
                 }
                 break;
             case 2:
-                System.out.println("\n1. Buscar por nombre");
-                System.out.println("2. Eliminar Item");
+                System.out.println("\n|=== Filtrado y Búsqueda ===|");
+                System.out.println("|1. Buscar por nombre         |");
+                System.out.println("|2. Eliminar Item             |");
+                System.out.println("|3. Salir                     |");
+                System.out.println("|=============================|");
                 System.out.print(">> Elige una opcion: ");
                 int opcion3 = 0;
                 try {
                     opcion3 = Integer.parseInt(sc.nextLine());
                 } catch (NumberFormatException e) {
-                    System.out.println("Entrada inválida.");
+                    System.out.println("|!|: Entrada inválida.");
                     break;
                 }
 
                 if (opcion3 == 1) {
                     System.out.print(">> Ingrese el nombre del item: ");
                     String nombre = sc.nextLine();
-                    juego.buscarItem(nombre);
+                    System.out.println(juego.buscarItem(nombre));
                 } else if (opcion3 == 2) {
                     System.out.print(">> Ingrese el nombre del item a eliminar: ");
                     String nombre = sc.nextLine();
-                    juego.eliminarItem(nombre);
+                    System.out.println(juego.eliminarItem(nombre));
                 } else {
-                    System.out.println("Opción no válida.");
+                    System.out.println("|!|: Opción no válida.");
                 }
                 break;
             case 3:
                 break;
             default:
-                System.out.println("Opción no válida.");
+                System.out.println("|!|: Opción no válida.");
                 break;
         }
     }
-
-    public static void probarExcepciones() {
-
-        Mago magoSinMana = new Mago("Saruman", 1, 80, 80, 2, 12, 5, 20);
-        magoSinMana.setArma(new ArmaMelee("Baston oscuro", 1, 10, 10, 5));
-        Enemigo esqueleto = new Esqueleto(1);
-
-        try {
-            magoSinMana.atacar(esqueleto);
-        } catch (ManaInsuficienteException e) {
-            System.out.println(">> Error:  " + e.getMessage());
-        }
-        ArmaMelee armaRota = new ArmaMelee("Espada oxidada", 1, 0, 5, 5);
-
-        try {
-            armaRota.usar();
-        } catch (ArmaRotaException e) {
-            System.out.println(">> Error:  " + e.getMessage());
-        }
-    }
-
 }

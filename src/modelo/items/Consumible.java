@@ -74,4 +74,3 @@ public class Consumible extends Item {
                 '\n' + '}';
     }
 }
-

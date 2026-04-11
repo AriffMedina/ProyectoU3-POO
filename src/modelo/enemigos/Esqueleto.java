@@ -4,7 +4,7 @@ import personajes.Personaje;
 
 public class Esqueleto extends Enemigo {
     public Esqueleto(int nivel) {
-        super("Esqueleto", nivel, nivel * 10, nivel * 10);
+        super("Esqueleto", nivel, nivel * 50, nivel * 50);
     }
 
     @Override

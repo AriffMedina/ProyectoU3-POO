@@ -1,12 +1,15 @@
 package rpg;
 
 import personajes.*;
-import enemigos.Enemigo;
+import enemigos.*;
 import items.*;
+import excepciones.ArmaRotaException;
+import excepciones.ManaInsuficienteException;
 import interfaces.PartidaRepositorio;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collections;
 
 public class JuegoServicio {
     private Personaje jugador;
@@ -21,87 +24,85 @@ public class JuegoServicio {
         cargarPartida();
     }
 
-    public void crearJugador(int opcion) {
+    public String crearJugador(int opcion) {
         switch (opcion) {
             case 1:
                 jugador = new Arquero("Legolas", 2, 100, 100, 12, 8, 6, 20);
-                System.out.println("Has elegido a Legolas, el Arquero.");
-
                 break;
             case 2:
                 jugador = new Mago("Gandalf", 2, 80, 80, 6, 12, 50, 50);
-                System.out.println("Has elegido a Gandalf, el Mago.");
                 break;
             case 3:
                 jugador = new Peleador("Conan", 2, 120, 120, 15, 6, 8, 10);
-                System.out.println("Has elegido a Conan, el Peleador.");
                 break;
             default:
-                System.out.println("Opción no válida.");
-                return;
+                return "Opción no válida.";
         }
-        System.out.println("¡Bienvenido al juego, " + jugador.getNombre() + "! Prepárate para la aventura.");
         guardarPartida();
+        return "Personaje creado exitosamente.\n" + jugador.toString();
     }
 
-    public void mostrarInventario() {
+    public String mostrarInventario() {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje.");
-            return;
+            return "No se pudo mostrar el inventario porque no hay un personaje creado.";
         }
-        System.out.println("Inventario de " + jugador.getNombre() + ":");
+        StringBuilder sb = new StringBuilder(jugador.getNombre() + " inventario: \n");
         int total = 0;
+
         for (Arma a : jugador.getArmas()) {
-            System.out.println(a);
+            sb.append(" ").append(a).append("\n");
             total++;
         }
         for (Armadura a : jugador.getArmaduras()) {
-            System.out.println(a);
+            sb.append(" ").append(a).append("\n");
             total++;
         }
         for (Consumible c : jugador.getConsumibles()) {
-            System.out.println(c);
+            sb.append(" ").append(c).append("\n");
             total++;
         }
         if (total == 0) {
-            System.out.println("Inventario vacio.");
+            return "Inventario vacio.";
         }
+        return sb.toString();
     }
 
-    public void sortearItem() {
+    public String sortearItem() {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje.");
-            return;
+            return "No se pudo sortear el item porque no hay un personaje creado.";
         }
 
         Item i = GestorItems.generarItem();
-        System.out.println("Obtuviste: " + i.getNombre());
         i.equiparEn(jugador);
         guardarPartida();
+        return "Item añadido al inventario: " + i.getNombre();
     }
 
-    public void iniciarCombate() {
+    public String iniciarCombate() {
         if (jugador == null) {
-            System.out.println("Primero debes crear tu personaje para iniciar un combate.");
-            return;
+            return "No se pudo iniciar el combate porque no hay un personaje creado.";
         }
-        Enemigo enemigo = GestorEnemigos.generarEnemigo(jugador.getNivel());
+
+        Enemigo enemigo = GestorEnemigos.generarEnemigo(jugador.getNivel() + 3);
         accion.iniciar(jugador, enemigo);
+        if (!jugador.estaVivo()) {
+            return "Combate finalizado.";
+        }
         guardarPartida();
+        return "Combate iniciado exitosamente.";
     }
 
-    public void usarConsumible() {
+    public String usarConsumible() {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje.");
-            return;
+            return "No se pudo usar el consumible porque no hay un personaje creado.";
         }
         accion.usarConsumible(jugador);
         guardarPartida();
+        return "Consumible usado exitosamente.: " + jugador.getConsumibles();
     }
 
     public String guardarPartida() {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje.");
             return "No se pudo guardar la partida porque no hay un personaje creado.";
         }
         List<Personaje> lista = new ArrayList<>();
@@ -121,41 +122,32 @@ public class JuegoServicio {
         return "Partida cargada exitosamente para " + jugador.getNombre() + ".";
     }
 
-    public void buscarItem(String nombre) {
+    public Item buscarItem(String nombre) {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje");
-            return;
+            return null;
         }
-        boolean encontrado = false;
 
         for (Arma arm : jugador.getArmas()) {
             if (arm.getNombre().equalsIgnoreCase(nombre)) {
-                System.out.println("Item encontrado (Arma): " + arm);
-                encontrado = true;
+                return arm;
             }
         }
         for (Armadura a : jugador.getArmaduras()) {
             if (a.getNombre().equalsIgnoreCase(nombre)) {
-                System.out.println("Item encontrado (Armadura): " + a);
-                encontrado = true;
+                return a;
             }
         }
         for (Consumible c : jugador.getConsumibles()) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
-                System.out.println("Item encontrado (Consumible): " + c);
-                encontrado = true;
+                return c;
             }
         }
-
-        if (!encontrado) {
-            System.out.println("No se encontro ningun item con el nombre: " + nombre);
-        }
+        return null;
     }
 
-    public void eliminarItem(String nombre) {
+    public String eliminarItem(String nombre) {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje.");
-            return;
+            return "No se pudo eliminar el item porque no hay un personaje creado.";
         }
 
         Iterator<Arma> itArm = jugador.getArmas().iterator();
@@ -167,9 +159,8 @@ public class JuegoServicio {
                 } else {
                     itArm.remove();
                 }
-                System.out.println("Item eliminado: " + nombre);
                 guardarPartida();
-                return;
+                return "Item eliminado: " + nombre;
             }
         }
 
@@ -182,9 +173,8 @@ public class JuegoServicio {
                 } else {
                     itArmaduras.remove();
                 }
-                System.out.println("Item eliminado: " + nombre);
                 guardarPartida();
-                return;
+                return "Item eliminado: " + nombre;
             }
         }
 
@@ -197,18 +187,16 @@ public class JuegoServicio {
                 } else {
                     itCons.remove();
                 }
-                System.out.println("Item eliminado: " + nombre);
                 guardarPartida();
-                return;
+                return "Item eliminado: " + nombre;
             }
         }
-        System.out.println("No se encontro ningun item con el nombrre: " + nombre);
+        return "No se encontro ningun item con el nombre: " + nombre;
     }
 
-    public void filtrarArmas() {
+    public List<Arma> filtrarArmas() {
         if (jugador == null) {
-            System.out.println("Primero crea un personaje");
-            return;
+            return Collections.emptyList();
         }
 
         List<Arma> armasFiltradas = new ArrayList<>();
@@ -218,10 +206,7 @@ public class JuegoServicio {
                 armasFiltradas.add(a);
             }
         }
-        System.out.println("Armas disponibles:");
-        for (Arma a : armasFiltradas) {
-            System.out.println("- " + a);
-        }
+        return armasFiltradas;
     }
 
     public Enemigo buscarPorNombre(String nombre) {
@@ -230,5 +215,27 @@ public class JuegoServicio {
 
     public List<Enemigo> filtrarPorNivel(int nivel) {
         return gestorEnemigos.filtrarPorNivel(nivel);
+    }
+
+    public String probarExcepciones() {
+        StringBuilder sb = new StringBuilder();
+
+        Mago m1 = new Mago("Michi", 1, 80, 80, 2, 12, 5, 20);
+        m1.setArma(new ArmaMelee("Baston oscuro", 1, 10, 10, 5));
+        Enemigo esqueleto = new Esqueleto(1);
+        try {
+            m1.atacar(esqueleto);
+        } catch (ManaInsuficienteException e) {
+            sb.append(">> Error: ").append(e.getMessage()).append("\n");
+        }
+
+        ArmaMelee a1 = new ArmaMelee("Espada oxidada", 1, 0, 5, 5);
+        try {
+            a1.usar();
+        } catch (ArmaRotaException e) {
+            sb.append(">> Error: ").append(e.getMessage()).append("\n");
+        }
+
+        return sb.toString();
     }
 }

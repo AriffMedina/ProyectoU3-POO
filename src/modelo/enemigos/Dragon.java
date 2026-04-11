@@ -4,7 +4,7 @@ import personajes.Personaje;
 
 public class Dragon extends Enemigo {
     public Dragon(int nivel) {
-        super("Dragón Eterno", nivel, nivel * 5, nivel * 6);
+        super("Dragón Eterno", nivel, nivel * 100, nivel * 100);
     }
 
     @Override

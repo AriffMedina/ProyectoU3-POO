@@ -1,8 +1,10 @@
 package enemigos;
+
 import personajes.Personaje;
+
 public class Zombie extends Enemigo {
     public Zombie(int nivel) {
-        super("Zombie", nivel, nivel * 3, nivel * 3);
+        super("Zombie", nivel, nivel * 60, nivel * 60);
     }
 
     @Override
