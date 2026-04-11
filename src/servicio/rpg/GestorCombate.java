@@ -1,11 +1,10 @@
 package rpg;
 
 import personajes.*;
-
-import java.util.Scanner;
 import enemigos.Enemigo;
 import excepciones.ManaInsuficienteException;
 import items.Consumible;
+import java.util.Scanner;
 
 public class GestorCombate {
     private static final int max_turnos = 50;

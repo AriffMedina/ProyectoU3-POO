@@ -2,12 +2,8 @@ package rpg;
 
 import personajes.*;
 import enemigos.Enemigo;
-import items.Arma;
-import items.Armadura;
-import items.Consumible;
-import items.Item;
+import items.*;
 import interfaces.PartidaRepositorio;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
