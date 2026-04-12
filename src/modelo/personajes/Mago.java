@@ -1,6 +1,7 @@
 package personajes;
 
 import enemigos.Enemigo;
+import excepciones.ArmaRotaException;
 import excepciones.ManaInsuficienteException;
 
 public class Mago extends Personaje {
@@ -56,8 +57,18 @@ public class Mago extends Personaje {
             throw new ManaInsuficienteException("Mana insuficiente: " + mana);
 
         int danioTotal = getDanio() + mana;
-        if (getArma() != null)
-            danioTotal += getArma().getDanio();
+        if (getArma() != null) {
+            if (getArma().estaRota()) {
+                System.out.println("El arma " + getArma().getNombre() + " esta rota.");
+            } else {
+                danioTotal += getArma().getDanio();
+                try {
+                    getArma().usar();
+                } catch (ArmaRotaException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
         e.recibirDanio(danioTotal);
         mana -= 10;
     }

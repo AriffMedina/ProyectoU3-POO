@@ -9,7 +9,6 @@ import interfaces.PartidaRepositorio;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Collections;
 
 public class JuegoServicio {
     private Personaje jugador;
@@ -196,7 +195,7 @@ public class JuegoServicio {
 
     public List<Arma> filtrarArmas() {
         if (jugador == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         List<Arma> armasFiltradas = new ArrayList<>();

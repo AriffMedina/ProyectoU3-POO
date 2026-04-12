@@ -1,6 +1,7 @@
 package personajes;
 
 import enemigos.Enemigo;
+import excepciones.ArmaRotaException;
 import excepciones.ManaInsuficienteException;
 
 public class Peleador extends Personaje {
@@ -46,9 +47,22 @@ public class Peleador extends Personaje {
     public void atacar(Enemigo e) throws ManaInsuficienteException {
         if (!estaVivo())
             return;
-        if (getArma() == null)
+        if (e == null)
             return;
-        int danioTotal = getDanio() + this.fuerza * 2 + getArma().getDanio();
+
+        int danioTotal = getDanio() + this.fuerza * 2;
+        if (getArma() != null) {
+            if (getArma().estaRota()) {
+                System.out.println("El arma " + getArma().getNombre() + " esta rota.");
+            } else {
+                danioTotal += getArma().getDanio();
+                try {
+                    getArma().usar();
+                } catch (ArmaRotaException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
         e.recibirDanio(danioTotal);
     }
 
