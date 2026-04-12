@@ -53,7 +53,7 @@ public class Main {
                         try {
                             opcion2 = Integer.parseInt(sc.nextLine());
                             if (opcion2 >= 1 && opcion2 <= 3) {
-                                juego.crearJugador(opcion2);
+                                System.out.println(juego.crearJugador(opcion2));
                             } else {
                                 System.out.println("|!|: Opción no válida. Intenta de nuevo.");
                             }
@@ -97,10 +97,10 @@ public class Main {
 
     public static void filtradoMenu() {
         System.out.println("\n|=== Filtrado y Búsqueda ===|");
-        System.out.println("|1. Enemigos                  |");
-        System.out.println("|2. Items                     |");
-        System.out.println("|3. Salir                     |");
-        System.out.println("|=============================|");
+        System.out.println("|1. Enemigos               |");
+        System.out.println("|2. Items                  |");
+        System.out.println("|3. Salir                  |");
+        System.out.println("|==========================|");
         System.out.print(">> Elige una opcion: ");
 
         int opcion = 0;
@@ -114,10 +114,10 @@ public class Main {
         switch (opcion) {
             case 1:
                 System.out.println("\n|=== Filtrado y Búsqueda ===|");
-                System.out.println("|1. Buscar por nombre         |");
-                System.out.println("|2. Filtrar por Nivel         |");
-                System.out.println("|3. Salir                     |");
-                System.out.println("|=============================|");
+                System.out.println("|1. Buscar por nombre       |");
+                System.out.println("|2. Filtrar por Nivel       |");
+                System.out.println("|3. Salir                   |");
+                System.out.println("|===========================|");
                 System.out.print(">> Elige una opcion: ");
                 int opcion2 = 0;
                 try {
@@ -130,12 +130,12 @@ public class Main {
                 if (opcion2 == 1) {
                     System.out.print(">> Ingrese el nombre del enemigo: ");
                     String nombre = sc.nextLine();
-                    juego.buscarPorNombre(nombre);
+                    System.out.println(juego.buscarPorNombre(nombre));
                 } else if (opcion2 == 2) {
                     System.out.print(">> Ingrese el nivel del enemigo: ");
                     try {
                         int nivel = Integer.parseInt(sc.nextLine());
-                        juego.filtrarPorNivel(nivel);
+                        System.out.println(juego.filtrarPorNivel(nivel));
                     } catch (NumberFormatException e) {
                         System.out.println("|!|: Nivel inválido.");
                     }
@@ -145,10 +145,10 @@ public class Main {
                 break;
             case 2:
                 System.out.println("\n|=== Filtrado y Búsqueda ===|");
-                System.out.println("|1. Buscar por nombre         |");
-                System.out.println("|2. Eliminar Item             |");
-                System.out.println("|3. Salir                     |");
-                System.out.println("|=============================|");
+                System.out.println("|1. Buscar por nombre     |");
+                System.out.println("|2. Eliminar Item         |");
+                System.out.println("|3. Salir                 |");
+                System.out.println("|=========================|");
                 System.out.print(">> Elige una opcion: ");
                 int opcion3 = 0;
                 try {
