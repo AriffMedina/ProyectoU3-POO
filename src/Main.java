@@ -24,11 +24,10 @@ public class Main {
             System.out.println("|2. Sortear item               |");
             System.out.println("|3. Mostrar inventario         |");
             System.out.println("|4. Iniciar combate            |");
-            System.out.println("|5. Guardar partida            |");
-            System.out.println("|6. Cargar partida             |");
-            System.out.println("|7. Filtrado y búsqueda        |");
-            System.out.println("|8. Probar excepciones         |");
-            System.out.println("|9. Salir                      |");
+            System.out.println("|5. Cargar partida             |");
+            System.out.println("|6. Filtrado y búsqueda        |");
+            System.out.println("|7. Probar excepciones         |");
+            System.out.println("|8. Salir                      |");
             System.out.println("|==============================|");
             System.out.print(">> Elige una opcion: ");
 
@@ -72,18 +71,15 @@ public class Main {
                     System.out.println(juego.iniciarCombate());
                     break;
                 case 5:
-                    System.out.println(juego.guardarPartida());
-                    break;
-                case 6:
                     System.out.println(juego.cargarPartida());
                     break;
-                case 7:
+                case 6:
                     filtradoMenu();
                     break;
-                case 8:
+                case 7:
                     System.out.println(juego.probarExcepciones());
                     break;
-                case 9:
+                case 8:
                     System.out.println("Saliendo ...");
                     System.out.println("Gracias por jugar!");
                     break;
@@ -91,7 +87,7 @@ public class Main {
                     System.out.println("|!|: Opción no válida.");
                     break;
             }
-        } while (opcion != 9);
+        } while (opcion != 8);
 
     }
 
@@ -110,7 +106,6 @@ public class Main {
             System.out.println("|!|: Entrada inválida. Debe ser un número.");
             return;
         }
-
         switch (opcion) {
             case 1:
                 System.out.println("\n|=== Filtrado y Búsqueda ===|");
