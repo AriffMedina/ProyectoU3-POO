@@ -83,6 +83,9 @@ public class JuegoServicio {
         }
 
         Enemigo enemigo = GestorEnemigos.generarEnemigo(jugador.getNivel() + 3);
+
+        gestorEnemigos.agregarEnemigo(enemigo);
+
         accion.iniciar(jugador, enemigo);
         if (!jugador.estaVivo()) {
             return "Combate finalizado.";
