@@ -58,17 +58,14 @@ public class Mago extends Personaje {
 
         int danioTotal = getDanio() + mana;
         if (getArma() != null) {
-            if (getArma().estaRota()) {
-                System.out.println("El arma " + getArma().getNombre() + " esta rota.");
-            } else {
+            try {
+                getArma().usar();
                 danioTotal += getArma().getDanio();
-                try {
-                    getArma().usar();
-                } catch (ArmaRotaException ex) {
-                    System.out.println(ex.getMessage());
-                }
+            } catch (ArmaRotaException ex) {
+                System.out.println(ex.getMessage());
             }
         }
+
         e.recibirDanio(danioTotal);
         mana -= 10;
     }

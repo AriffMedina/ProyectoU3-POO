@@ -52,15 +52,11 @@ public class Peleador extends Personaje {
 
         int danioTotal = getDanio() + this.fuerza * 2;
         if (getArma() != null) {
-            if (getArma().estaRota()) {
-                System.out.println("El arma " + getArma().getNombre() + " esta rota.");
-            } else {
+            try {
+                getArma().usar();
                 danioTotal += getArma().getDanio();
-                try {
-                    getArma().usar();
-                } catch (ArmaRotaException ex) {
-                    System.out.println(ex.getMessage());
-                }
+            } catch (ArmaRotaException ex) {
+                System.out.println(ex.getMessage());
             }
         }
         e.recibirDanio(danioTotal);
