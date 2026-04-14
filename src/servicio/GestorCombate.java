@@ -106,7 +106,9 @@ public class GestorCombate {
         int vidaNueva = c.curar(vidaAntes, p.getVidaMaxima());
         p.setVidaActual(vidaNueva);
 
-        p.getConsumibles().remove(0);
+        if (c.getCantidad() == 0) {
+            p.getConsumibles().remove(0);
+        }
 
         System.out.println("Vida restaurada: " + vidaAntes + " -> " + vidaNueva);
     }
