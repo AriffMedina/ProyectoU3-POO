@@ -68,7 +68,7 @@ public class Consumible extends Item {
     @Override
     public String toString() {
         return "|Consumible{" +
-                "\n|- nombre='" + nombre +
+                "\n|- nombre='" + nombre + '\'' +
                 "\n|- cantidad=" + cantidad +
                 "\n|- curativo=" + curativo +
                 '\n' + '}';
