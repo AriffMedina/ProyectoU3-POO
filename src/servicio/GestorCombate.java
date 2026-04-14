@@ -1,4 +1,4 @@
-package rpg;
+package servicio;
 
 import personajes.*;
 import enemigos.Enemigo;

@@ -1,4 +1,4 @@
-package rpg;
+package servicio;
 
 import enemigos.*;
 import java.util.ArrayList;
