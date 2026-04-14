@@ -1,4 +1,4 @@
-package rpg;
+package servicio;
 
 import items.*;
 

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 import persistencia.RepositorioArchivo;
-import rpg.JuegoServicio;
+import servicio.JuegoServicio;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
